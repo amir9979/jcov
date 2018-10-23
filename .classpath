@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="examples/tutorial/src"/>
+	<classpathentry kind="src" path="examples/tutorial/test"/>
+	<classpathentry kind="src" path="plugins/coberturaXML/src"/>
+	<classpathentry kind="src" path="src/classes"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

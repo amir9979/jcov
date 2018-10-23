@@ -312,6 +312,7 @@ class Server extends Thread {
     // config data
 
     private String fileName;                // output file
+    private int filename_counter;                   // output filename counter - used to update the filename
     private final String templateName;      // template file
     private final int port;                 // port to listen for client connections
     private int saveCount;                  // maximum connections to manage. Infinite if 0
@@ -439,6 +440,7 @@ class Server extends Thread {
         this(port, once, template, host, saveAtReceive, genscale || outTestList != null, mergeByTestNames);
 
         this.fileName = output;
+        this.filename_counter = 0;
         this.outTestList = outTestList;
         this.saveCount = maxCount;
     }
@@ -792,13 +794,15 @@ class Server extends Thread {
      * Save data to file if it's needed (if dataSaved == false)
      */
     public synchronized void saveData() {
-        if (dataSaved == true) {
-            Grabber.logger.log(Level.FINE, "No new data received - nothing to save");
-            return; // nothing to do - received data is already saved
-        }
+//        if (dataSaved == true) {
+//            Grabber.logger.log(Level.FINE, "No new data received - nothing to save");
+//            return; // nothing to do - received data is already saved
+//        }
 
         Grabber.logger.log(Level.INFO, "Server is saving cached data to {0}", fileName);
         saveData(data);
+        updateFileNameByCounter();
+        clearData();
         Grabber.logger.log(Level.FINE, "Saving done");
     }
 
@@ -851,6 +855,19 @@ class Server extends Thread {
             dataSaved = true;
         } catch (Exception ex) {
             Grabber.logger.log(Level.SEVERE, "Error while saving data", ex);
+//            ex.printStackTrace();
+        }
+    }
+    /**
+     * Clear data
+     */
+    private synchronized void clearData() {
+        try {
+            for (int i = 0; i < data.length; ++i) {
+                data[i] = 0;
+            }
+        } catch (Exception ex) {
+            Grabber.logger.log(Level.SEVERE, "Error while clearing data", ex);
 //            ex.printStackTrace();
         }
     }
@@ -1099,6 +1116,12 @@ class Server extends Thread {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+    public void updateFileNameByCounter() {
+        this.filename_counter++;
+        this.setFileName(this.fileName + String.valueOf(this.filename_counter));
+    }
+
 
     public String getSaveBadData() {
         return saveBadData;

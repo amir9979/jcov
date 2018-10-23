@@ -33,7 +33,7 @@
 
     <!-- Build area -->
     <property name="build.dir" location="${result.dir}/jcov_${build.version}"/>
-    <property name="jcov.classpath" value="${asm.jar}:${asm.util.jar}:${asm.tree.jar}:${java.home}/lib/tools.jar"/>
+    <property name="jcov.classpath" value="${asm.jar}:${junit.jar}:${asm.util.jar}:${asm.tree.jar}:${java.home}/lib/tools.jar"/>
 
     <!-- Temp dir is for files which do not appear in release directory -->
     <property name="tmp.dir" location="${result.dir}/temp"/>
@@ -86,6 +86,10 @@
 
     <patternset id="asm.files">
         <include name="org/objectweb/asm/**"/>
+    </patternset>
+	
+    <patternset id="junit.files">
+        <include name="org/junit/**"/>
     </patternset>
 
     <target name="clean" description="clean build data">
@@ -188,6 +192,7 @@
         <unjar src="${asm.jar}" dest="${jcov.classes}"/>
         <unjar src="${asm.tree.jar}" dest="${jcov.classes}"/>
         <unjar src="${asm.util.jar}" dest="${jcov.classes}"/>
+        <unjar src="${junit.jar}" dest="${jcov.classes}"/>
 
         <mkdir dir="${jcov.classes}/META-INF"/>
         <mkdir dir="${jcov.classes}/META-INF/services"/>
@@ -215,6 +220,7 @@
 
             <patternset refid="jcov.files"/>
             <patternset refid="asm.files"/>
+            <patternset refid="junit.files"/>
             <patternset refid="jcov.services"/>
         </jar>
 
