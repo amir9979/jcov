@@ -232,6 +232,15 @@ public class GrabberManager extends JCovCMDTool {
             System.exit(1);
         }
     }
+
+    public static void saveCommand() {
+        GrabberManager tool = new GrabberManager();
+        try {
+            tool.sendSaveCommand();
+        } catch (Exception ex) {
+        }
+    }
+
     private int port;
     private String host;
 
