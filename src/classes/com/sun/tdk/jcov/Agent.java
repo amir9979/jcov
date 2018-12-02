@@ -172,6 +172,7 @@ public class Agent extends JCovTool {
                 CollectDetect.enterInstrumentationCode(); // ensuring that instrumenting will not influence on coverage data
 
                 try {
+                    System.out.println("get class to transform " + className);
                     if (ignoreLoads) {
                         logger.log(Level.INFO, "Ignore for now {0}", className);
                     } else {
@@ -182,6 +183,7 @@ public class Agent extends JCovTool {
                     }
                 } catch (Throwable e) {
                     logger.log(Level.SEVERE, "Adaption failed for {0} with :{1}", new Object[]{className, e});
+                    System.out.println("failed to transform class " + className);
                     e.printStackTrace();
                 } finally {
                     CollectDetect.leaveInstrumentationCode(); // release instrumentation lock
@@ -252,24 +254,27 @@ public class Agent extends JCovTool {
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    ServerSocket sock = new ServerSocket(port);
-                    Socket s = sock.accept();
-                    System.out.println("Accepted");
-                    InputStream is = s.getInputStream();
-                    byte[] buff = new byte[1024];
-                    int l;
-                    String rest = "";
-                    while ((l = is.read(buff)) > 0) {
-                        String msg = rest + new String(buff, 0, l, Charset.defaultCharset());
-                        System.out.println("Message: " + msg);
-                        rest = performTask(msg, s);
+            try {
+                ServerSocket sock = new ServerSocket(port);
+                while (true) {
+                    try {
+                        Socket s = sock.accept();
+                        System.out.println("Accepted");
+                        InputStream is = s.getInputStream();
+                        byte[] buff = new byte[1024];
+                        int l;
+                        String rest = "";
+                        while ((l = is.read(buff)) > 0) {
+                            String msg = rest + new String(buff, 0, l, Charset.defaultCharset());
+                            System.out.println("Message: " + msg);
+                            rest = performTask(msg, s);
+                        }
+                    } catch (IOException ex) {
+                        logger.log(Level.SEVERE, "Network IOException", ex);
                     }
-                    sock.close();
-                } catch (IOException ex) {
-                    logger.log(Level.SEVERE, "Network IOException", ex);
                 }
+            } catch (IOException ex) {
+                logger.log(Level.SEVERE, "Network IOException", ex);
             }
         }
 
@@ -295,6 +300,7 @@ public class Agent extends JCovTool {
                         case SAVE:
                             msg = msg.substring(cmd.cmd().length());
                             if (Collect.enabled) {
+                                System.out.println("Agent save results");
                                 Collect.disable();
                                 Collect.saveResults();
                                 params.enable();

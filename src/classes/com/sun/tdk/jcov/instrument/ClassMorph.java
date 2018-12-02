@@ -271,7 +271,7 @@ public class ClassMorph {
                 rtClassesInstrumented = true;
                 logger.log(Level.WARNING, "It's possible that you are instrumenting classes which are loaded before VM is loaded. It's recomended to add saveatend at java/lang/Shutdown.runHooks method. Data could be lost otherwise.");
             }
-
+            System.out.println("transformed!");
             return res;
         }
     }

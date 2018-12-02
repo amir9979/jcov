@@ -6,8 +6,6 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import java.net.Socket;
-import java.io.PrintStream;
-import java.io.InputStream;
 import com.sun.tdk.jcov.GrabberManager;
 
 public class JUnitExecutionListener extends RunListener {
@@ -21,24 +19,15 @@ public class JUnitExecutionListener extends RunListener {
     }
 
     public void testStarted(Description description) throws Exception {
-        System.out.println("Starting: " + description.getMethodName());
     }
 
     public void testFinished(Description description) throws Exception {
         System.out.println("Finished: " + description.getMethodName());
         Socket sock = new Socket("localhost", 3337);
         try {
-            PrintStream ps = new PrintStream(sock.getOutputStream(), false, "UTF-8");
-            ps.println("save");
-            ps.flush();
-            InputStream is = sock.getInputStream();
-            byte[] buff = new byte[1024];
-            is.read(buff);
-        } catch (Exception e) {}
-        finally {
-            sock.close();
-        }
+        GrabberManager.saveAgentDataCommand();
         GrabberManager.saveCommand();
+    } catch (Exception e) { e.printStackTrace();}
     }
 
     public void testFailure(Failure failure) throws Exception {

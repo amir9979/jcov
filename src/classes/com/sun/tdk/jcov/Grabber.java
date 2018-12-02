@@ -374,7 +374,7 @@ class Server extends Thread {
         this.once = once;
         this.templateName = template;
         this.hostName = host;
-        this.saveAtReceive = true;
+        this.saveAtReceive = false;
         this.genscale = genscale;
         this.mergeByTestNames = mergeByTestNames;
 
@@ -805,8 +805,8 @@ class Server extends Thread {
         Grabber.logger.log(Level.INFO, "Server is saving cached data to {0}", fileName);
         saveData(data);
         Grabber.logger.log(Level.FINE, "Saving done");
-        updateFileNameByCounter();
-//        clearData();
+//        updateFileNameByCounter();
+        clearData();
     }
 
     /**
@@ -922,6 +922,7 @@ class Server extends Thread {
                         dataRoot.update();
                         FileSaver fs = FileSaver.getFileSaver(dataRoot, fileName + dumpCount, templateName, MERGE.OVERWRITE, false, true);
                         fs.saveResults(fileName + dumpCount);
+                        Grabber.logger.log(Level.FINE, "saving results to {0}", fileName + dumpCount);
                         if (outTestList != null) {
                             Utils.writeLines(outTestList + dumpCount, tests.toArray(new String[tests.size()]));
                             tests.clear();
@@ -1254,6 +1255,16 @@ class CommandListener extends Thread {
                             out.flush();
                             in.close();
                             out.close();
+                            break;
+                        case MiscConstants.GRABBER_START_NEW_TEST_COMMAND:
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.defaultCharset()));
+                            String testName = reader.readLine();
+                            reader.close();
+                            Grabber.logger.log(Level.INFO, "Server received start new test command with test {0}", testName);
+                            server.setFileName(testName + ".xml");
+                            socket.getOutputStream().write(1);
+                            socket.getOutputStream().close();
+                            in.close();
                             break;
                         default:
                             Grabber.logger.log(Level.WARNING, "Unknown message '{0}' came from {0}", new Object[]{Integer.toString(command), socket.getInetAddress().getHostAddress()});

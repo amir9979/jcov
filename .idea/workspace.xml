@@ -3,11 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="0443693c-0df9-4ee8-9b61-37d89ca43e3a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grabber_out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jcov_runner.bat" beforeDir="false" afterPath="$PROJECT_DIR$/jcov_runner.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/JUnitExecutionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/ClassMorph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/ClassMorph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template.xml" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,29 +25,30 @@
     <session id="-1217475874">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="21" />
+          <entry key="java" value="48" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="21" />
+          <entry key="JAVA" value="48" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="474" />
+          <entry key="java" value="1191" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="474" />
+          <entry key="JAVA" value="1191" />
         </counts>
       </usages-collector>
     </session>
@@ -52,20 +58,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2856">
-              <caret line="254" column="26" selection-start-line="254" selection-start-column="26" selection-end-line="254" selection-end-column="26" />
+            <state relative-caret-position="292">
+              <caret line="277" column="13" selection-start-line="277" selection-start-column="13" selection-end-line="277" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3497#3947#0" />
+                <element signature="e#7054#7055#0" expanded="true" />
+                <element signature="e#7107#7108#0" expanded="true" />
+                <element signature="e#15010#19031#0" />
+                <element signature="e#19037#19215#0" />
+                <element signature="e#19221#22103#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/util/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="1190" column="22" selection-start-line="1190" selection-start-column="22" selection-end-line="1190" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -73,8 +76,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="36" column="28" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
+            <state relative-caret-position="121">
+              <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -82,33 +85,37 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Merger.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="623" column="8" selection-start-line="623" selection-start-column="8" selection-end-line="623" selection-end-column="8" />
+            <state relative-caret-position="165">
+              <caret line="257" column="16" selection-start-line="257" selection-start-column="16" selection-end-line="257" selection-end-column="16" />
               <folding>
-                <element signature="e#14990#14991#0" expanded="true" />
-                <element signature="e#15038#15039#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#7706#7707#0" expanded="true" />
+                <element signature="e#7748#7749#0" expanded="true" />
+                <element signature="e#11935#11936#0" expanded="true" />
+                <element signature="e#12006#12007#0" expanded="true" />
+                <element signature="e#15689#15690#0" expanded="true" />
+                <element signature="e#15752#15753#0" expanded="true" />
+                <element signature="e#15804#15805#0" expanded="true" />
+                <element signature="e#15878#15879#0" expanded="true" />
+                <element signature="e#15932#15933#0" expanded="true" />
+                <element signature="e#16009#16010#0" expanded="true" />
+                <element signature="e#16049#16050#0" expanded="true" />
+                <element signature="e#16081#16082#0" expanded="true" />
+                <element signature="e#16118#16119#0" expanded="true" />
+                <element signature="e#16150#16151#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/RepGen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="587" column="23" selection-start-line="587" selection-start-column="23" selection-end-line="587" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="555" column="9" selection-start-line="555" selection-start-column="9" selection-end-line="555" selection-end-column="9" />
+            <state relative-caret-position="148">
+              <caret line="1262" column="33" selection-start-line="1262" selection-start-column="33" selection-end-line="1262" selection-end-column="33" />
               <folding>
                 <element signature="e#10326#10327#0" expanded="true" />
                 <element signature="e#10371#10372#0" expanded="true" />
@@ -118,19 +125,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/tools/OptionDescr.java">
+        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+            <state relative-caret-position="258">
+              <caret line="122" column="28" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/InstrumentationParams.java">
+        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/tools/OptionDescr.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="184" column="31" selection-start-line="184" selection-start-column="8" selection-end-line="184" selection-end-column="31" />
+            <state relative-caret-position="152">
+              <caret line="38" column="38" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -138,23 +145,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/Collect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="241" column="33" selection-start-line="241" selection-start-column="33" selection-end-line="241" selection-end-column="33" />
+            <state relative-caret-position="119">
+              <caret line="205" column="41" selection-start-line="205" selection-start-column="41" selection-end-line="205" selection-end-column="41" />
               <folding>
                 <element signature="e#4600#4601#0" expanded="true" />
                 <element signature="e#4630#4631#0" expanded="true" />
                 <element signature="e#4810#4811#0" expanded="true" />
                 <element signature="e#4846#4847#0" expanded="true" />
+                <element signature="e#5276#5277#0" expanded="true" />
+                <element signature="e#5326#5327#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/JCovSaver.java">
+        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/PropertyFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+            <state relative-caret-position="148">
+              <caret line="528" column="28" selection-start-line="528" selection-start-column="28" selection-end-line="528" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/NetworkSatelliteDecorator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="641">
+              <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -170,36 +188,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>fileNamePattern</find>
-      <find>saveda</find>
-      <find>dataSaved</find>
-      <find>clear</find>
-      <find>data</find>
-      <find>saveAtReceive</find>
-      <find>saveData</find>
-      <find>Server got dynamic data from client</find>
-      <find>send</find>
-      <find>exitWithoutSave</find>
-      <find>autosave disabled</find>
-      <find>&quot;saved&quot;</find>
-      <find>agent.port</find>
-      <find>Socket.</find>
-      <find>saveEnabled</find>
-      <find>saveResults()</find>
-      <find>saveResults() {</find>
-      <find>COMMAND</find>
-      <find>DSC_PORT</find>
-      <find>Socket</find>
-      <find>PrintStream</find>
-      <find>Reading as legacy</find>
-      <find>Unknown message</find>
-      <find>rintWriter</find>
-      <find>sock</find>
-      <find>getInputStream</find>
-      <find>Server is saving cached data</find>
-      <find>Merging all with</find>
-      <find>parse</find>
-      <find>Merging started</find>
+      <find>retransformClasses</find>
+      <find>printl</find>
+      <find>System.out.println</find>
+      <find>get class to trans</find>
+      <find>save</find>
+      <find>fileName</find>
+      <find>GRABBER_SAVE_COMMAND</find>
+      <find>startNewTestCommand</find>
+      <find>counts</find>
+      <find>println</find>
+      <find>port =</find>
+      <find>333</find>
+      <find>VAL_SINGLE</find>
+      <find>server.</find>
+      <find>&quot;wait&quot;</find>
+      <find>&quot;status&quot;</find>
+      <find>t&quot;, null, &quot;&quot;, OptionDescr.VAL_SINGLE, &quot;new test is starting.&quot;, MiscConstants.GRABBER_WAIT_COMMA</find>
+      <find>&quot;start_new_test</find>
+      <find>updateFileNameByCounter</find>
+      <find>Message:</find>
+      <find>3337</find>
+      <find>ode == COMM_KILL.getCommandCo</find>
+      <find>&quot;save&quot;</find>
+      <find>prints</find>
+      <find>Socket is closed</find>
+      <find>Exception occurred while processing command</find>
+      <find>!= null</find>
+      <find>saveAgentDataCommand</find>
+      <find>!ps.isClosed()</find>
+      <find>servers</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\User\Documents\GitHub\jcov\src\classes\com\sun\tdk\jcov</dir>
@@ -212,18 +230,20 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/JUnitExecutionListener.java" />
-        <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java" />
+        <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/ClassMorph.java" />
+        <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java" />
+        <option value="$PROJECT_DIR$/JCOV_BUILD/temp/listener_src/com/sun/tdk/jcov/GrabberManager.java" />
+        <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" />
         <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" />
         <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" />
-        <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" />
+        <option value="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="10" />
-    <option name="y" value="20" />
-    <option name="width" value="1346" />
-    <option name="height" value="688" />
+    <option name="x" value="-7" />
+    <option name="width" value="697" />
+    <option name="height" value="735" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -281,8 +301,8 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="JcovPortNumber&#9;PSI&#9;JAVA://com.sun.tdk.jcov.constants.MiscConstants#JcovPortNumber&#10;counts&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.Collect#counts&#10;Grabber.java&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/Grabber.java&#10;JUnitExecutionListener&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;sendcode&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#sendCode&#10;grabberManager&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager&#10;premain&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Agent#premain" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541890019343" />
+    <property name="SearchEverywhereHistoryKey" value="listen&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;JcovPortNumber&#9;PSI&#9;JAVA://com.sun.tdk.jcov.constants.MiscConstants#JcovPortNumber&#10;counts&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.Collect#counts&#10;Grabber.java&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/Grabber.java&#10;JUnitExecutionListener&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;sendcode&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#sendCode&#10;grabberManager&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager&#10;premain&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Agent#premain" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543793142363" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../gzoltar" />
   </component>
   <component name="RecentsManager">
@@ -328,7 +348,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17019667" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17246597" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -336,7 +356,7 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.36557376" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.23114754" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -363,12 +383,6 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java</url>
-          <line>1228</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java</url>
           <line>649</line>
           <properties />
           <option name="timeStamp" value="2" />
@@ -391,24 +405,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/DataRoot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="1238" column="16" selection-start-line="1238" selection-start-column="16" selection-end-line="1238" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/ant/Grabber.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="45" column="18" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="106" column="8" selection-start-line="106" selection-start-column="8" selection-end-line="106" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -419,16 +419,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java">
+    <entry file="file://$PROJECT_DIR$/JCOV_BUILD/temp/listener_src/com/sun/tdk/jcov/Grabber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="336" column="57" selection-start-line="336" selection-start-column="57" selection-end-line="336" selection-end-column="57" />
-          <folding>
-            <element signature="e#7706#7707#0" expanded="true" />
-            <element signature="e#7748#7749#0" expanded="true" />
-            <element signature="e#10664#10665#0" expanded="true" />
-            <element signature="e#10735#10736#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="530">
+          <caret line="1258" column="138" selection-start-line="1258" selection-start-column="131" selection-end-line="1258" selection-end-column="138" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/util/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18887">
+          <caret line="1190" column="22" selection-start-line="1190" selection-start-column="22" selection-end-line="1190" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -439,78 +440,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/Collect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="241" column="33" selection-start-line="241" selection-start-column="33" selection-end-line="241" selection-end-column="33" />
-          <folding>
-            <element signature="e#4600#4601#0" expanded="true" />
-            <element signature="e#4630#4631#0" expanded="true" />
-            <element signature="e#4810#4811#0" expanded="true" />
-            <element signature="e#4846#4847#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/tools/OptionDescr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/util/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="1190" column="22" selection-start-line="1190" selection-start-column="22" selection-end-line="1190" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/InstrumentationParams.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="184" column="31" selection-start-line="184" selection-start-column="8" selection-end-line="184" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JCOV_BUILD/temp/listener_src/com/sun/tdk/jcov/Grabber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="1258" column="138" selection-start-line="1258" selection-start-column="131" selection-end-line="1258" selection-end-column="138" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2856">
-          <caret line="254" column="26" selection-start-line="254" selection-start-column="26" selection-end-line="254" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="36" column="28" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/RepGen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="587" column="23" selection-start-line="587" selection-start-column="23" selection-end-line="587" selection-end-column="23" />
+        <state relative-caret-position="-148">
+          <caret line="575" column="12" selection-start-line="575" selection-start-column="12" selection-end-line="575" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Merger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="623" column="8" selection-start-line="623" selection-start-column="8" selection-end-line="623" selection-end-column="8" />
+        <state relative-caret-position="175">
+          <caret line="618" column="32" selection-start-line="618" selection-start-column="32" selection-end-line="618" selection-end-column="32" />
           <folding>
             <element signature="e#14990#14991#0" expanded="true" />
             <element signature="e#15038#15039#0" expanded="true" />
@@ -518,13 +458,179 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/InstrumentationOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/DataRoot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="1240" column="24" selection-start-line="1240" selection-start-column="24" selection-end-line="1240" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/FileSaver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/JCovXMLFileSaver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="106" column="37" selection-start-line="106" selection-start-column="37" selection-end-line="106" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/InstrumentationParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="299" column="21" selection-start-line="299" selection-start-column="21" selection-end-line="299" selection-end-column="21" />
+          <folding>
+            <element signature="e#9857#9858#0" expanded="true" />
+            <element signature="e#9927#9928#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Filter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="169" column="9" selection-start-line="169" selection-start-column="9" selection-end-line="169" selection-end-column="9" />
+          <folding>
+            <element signature="e#8585#8586#0" expanded="true" />
+            <element signature="e#8618#8619#0" expanded="true" />
+            <element signature="e#8808#8809#0" expanded="true" />
+            <element signature="e#8850#8851#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/ClassMorph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="273" column="32" selection-start-line="273" selection-start-column="32" selection-end-line="273" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/Collect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="205" column="41" selection-start-line="205" selection-start-column="41" selection-end-line="205" selection-end-column="41" />
+          <folding>
+            <element signature="e#4600#4601#0" expanded="true" />
+            <element signature="e#4630#4631#0" expanded="true" />
+            <element signature="e#4810#4811#0" expanded="true" />
+            <element signature="e#4846#4847#0" expanded="true" />
+            <element signature="e#5276#5277#0" expanded="true" />
+            <element signature="e#5326#5327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/PropertyFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="528" column="28" selection-start-line="528" selection-start-column="28" selection-end-line="528" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/NetworkSatelliteDecorator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="641">
+          <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JCOV_BUILD/temp/jcov_network_src/com/sun/tdk/jcov/runtime/JCovSocketSaver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/tools/OptionDescr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="38" column="38" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JCOV_BUILD/temp/listener_src/com/sun/tdk/jcov/GrabberManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="223" column="151" selection-start-line="223" selection-start-column="151" selection-end-line="223" selection-end-column="151" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="122" column="28" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="555" column="9" selection-start-line="555" selection-start-column="9" selection-end-line="555" selection-end-column="9" />
+        <state relative-caret-position="148">
+          <caret line="1262" column="33" selection-start-line="1262" selection-start-column="33" selection-end-line="1262" selection-end-column="33" />
           <folding>
             <element signature="e#10326#10327#0" expanded="true" />
             <element signature="e#10371#10372#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="277" column="13" selection-start-line="277" selection-start-column="13" selection-end-line="277" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3497#3947#0" />
+            <element signature="e#7054#7055#0" expanded="true" />
+            <element signature="e#7107#7108#0" expanded="true" />
+            <element signature="e#15010#19031#0" />
+            <element signature="e#19037#19215#0" />
+            <element signature="e#19221#22103#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="257" column="16" selection-start-line="257" selection-start-column="16" selection-end-line="257" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7706#7707#0" expanded="true" />
+            <element signature="e#7748#7749#0" expanded="true" />
+            <element signature="e#11935#11936#0" expanded="true" />
+            <element signature="e#12006#12007#0" expanded="true" />
+            <element signature="e#15689#15690#0" expanded="true" />
+            <element signature="e#15752#15753#0" expanded="true" />
+            <element signature="e#15804#15805#0" expanded="true" />
+            <element signature="e#15878#15879#0" expanded="true" />
+            <element signature="e#15932#15933#0" expanded="true" />
+            <element signature="e#16009#16010#0" expanded="true" />
+            <element signature="e#16049#16050#0" expanded="true" />
+            <element signature="e#16081#16082#0" expanded="true" />
+            <element signature="e#16118#16119#0" expanded="true" />
+            <element signature="e#16150#16151#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -120,4 +120,5 @@ public interface MiscConstants {
     public static final int GRABBER_SAVE_COMMAND = 3;
     public static final int GRABBER_STATUS_COMMAND = 4;
     public static final int GRABBER_WAIT_COMMAND = 5;
+    public static final int GRABBER_START_NEW_TEST_COMMAND = 6;
 }

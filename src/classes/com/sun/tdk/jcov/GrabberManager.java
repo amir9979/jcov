@@ -45,6 +45,10 @@ import java.util.LinkedList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.net.Socket;
+import java.io.PrintStream;
+import java.io.InputStream;
+
 
 /**
  * <p> Tool to control Grabber through socket requests </p>
@@ -216,6 +220,8 @@ public class GrabberManager extends JCovCMDTool {
             new ServerCommand("status", null, "", OptionDescr.VAL_NONE, "Print server status.", MiscConstants.GRABBER_STATUS_COMMAND);
     final static ServerCommand COMM_WAIT =
             new ServerCommand("wait", null, "", OptionDescr.VAL_NONE, "Wait server for starting.", MiscConstants.GRABBER_WAIT_COMMAND);
+    final static ServerCommand COMM_START_NEW_TEST =
+            new ServerCommand("start_new_test", null, "", OptionDescr.VAL_SINGLE, "new test is starting.", MiscConstants.GRABBER_START_NEW_TEST_COMMAND);
     static final Logger logger;
 
     static {
@@ -241,6 +247,39 @@ public class GrabberManager extends JCovCMDTool {
         }
     }
 
+    public static void saveAgentDataCommand() throws Exception {
+        Socket sock = null;
+        try {
+            sock = new Socket("localhost", 3337);
+            PrintStream ps = new PrintStream(sock.getOutputStream(), false, "UTF-8");
+            ps.println("save");
+            ps.flush();
+            ps.close();
+            if (!sock.isClosed()) {
+                InputStream is = sock.getInputStream();
+                byte[] buff = new byte[1024];
+                is.read(buff);
+                is.close();
+            }
+        } catch (Exception e) { e.printStackTrace();}
+        finally {
+            if (sock != null && !sock.isClosed()) {
+                sock.close();
+            }
+        }
+        System.out.println("Agent data saved!");
+    }
+
+
+        public static void startNewTestCommand(String testName) {
+        GrabberManager tool = new GrabberManager();
+        try {
+            tool.sendStartNewTestCommand(testName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private int port;
     private String host;
 
@@ -253,16 +292,16 @@ public class GrabberManager extends JCovCMDTool {
         this.host = host;
     }
 
-    private void sendCode(int code) throws IOException {
+    private void sendCode(int code, String dataToSend) throws IOException {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
             OutputStream out = socket.getOutputStream();
             out.write(code);
             BufferedWriter outWriter = null;
-            if (code == COMM_KILL.getCommandCode()){
+            if (dataToSend != null) {
                 outWriter = new BufferedWriter(new OutputStreamWriter(out, Charset.defaultCharset()));
-                outWriter.write(String.valueOf(stoptimeout));
+                outWriter.write(dataToSend);
                 outWriter.newLine();
                 outWriter.flush();
             }
@@ -307,7 +346,7 @@ public class GrabberManager extends JCovCMDTool {
      * @throws IOException
      */
     public void sendKillCommand() throws IOException {
-        sendCode(COMM_KILL.getCommandCode());
+        sendCode(COMM_KILL.getCommandCode(), String.valueOf(stoptimeout));
     }
 
     /**
@@ -316,7 +355,7 @@ public class GrabberManager extends JCovCMDTool {
      * @throws IOException
      */
     public void sendForceKillCommand() throws IOException {
-        sendCode(COMM_KILL_FORCE.getCommandCode());
+        sendCode(COMM_KILL_FORCE.getCommandCode(), null);
     }
 
     /**
@@ -325,7 +364,16 @@ public class GrabberManager extends JCovCMDTool {
      * @throws IOException
      */
     public void sendSaveCommand() throws IOException {
-        sendCode(COMM_SAVE.getCommandCode());
+        sendCode(COMM_SAVE.getCommandCode(), null);
+    }
+
+    /**
+     * Send START_NEW_TEST command. Port and Host should be both set.
+     *
+     * @throws IOException
+     */
+    public void sendStartNewTestCommand(String testName) throws IOException {
+        sendCode(COMM_START_NEW_TEST.getCommandCode(), testName);
     }
 
     /**
