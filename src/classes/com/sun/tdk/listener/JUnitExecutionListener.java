@@ -19,11 +19,14 @@ public class JUnitExecutionListener extends RunListener {
     }
 
     public void testStarted(Description description) throws Exception {
+        String testName = description.getClassName() + "."+ description.getMethodName();
+        System.out.println("Starting: " + testName);
+        GrabberManager.saveCommand();
+        GrabberManager.startNewTestCommand(testName);
     }
 
     public void testFinished(Description description) throws Exception {
-        System.out.println("Finished: " + description.getMethodName());
-        Socket sock = new Socket("localhost", 3337);
+        System.out.println("Finished: " + description.getClassName() + "."+ description.getMethodName());
         try {
         GrabberManager.saveAgentDataCommand();
         GrabberManager.saveCommand();
