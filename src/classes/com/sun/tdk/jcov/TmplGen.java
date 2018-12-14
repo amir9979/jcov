@@ -29,20 +29,21 @@ import com.sun.tdk.jcov.instrument.ClassMorph;
 import com.sun.tdk.jcov.instrument.InstrumentationOptions;
 import com.sun.tdk.jcov.instrument.InstrumentationOptions.InstrumentationMode;
 import com.sun.tdk.jcov.instrument.InstrumentationParams;
+import com.sun.tdk.jcov.report.javap.JavapClass;
 import com.sun.tdk.jcov.tools.EnvHandler;
 import com.sun.tdk.jcov.tools.JCovCMDTool;
 import com.sun.tdk.jcov.tools.OptionDescr;
 import com.sun.tdk.jcov.util.Utils;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.*;
 
 /**
  * <p> Template generation. </p> <p> JCov Template file should be used to merge
  * dynamic data and to save static data. Template could be created while
- * statically instrumenting classes or with TmplGen tool. </p>
+ * statically instrumenting classesFile or with TmplGen tool. </p>
  *
  * @author Andrey Titov
  */
@@ -52,6 +53,8 @@ public class TmplGen extends JCovCMDTool {
     private AbstractUniversalInstrumenter instrumenter;
     private String flushPath;
     private String template;
+    private String classesFile;
+    private String classPath;
     private String[] include;
     private String[] exclude;
     private String[] m_include;
@@ -85,7 +88,7 @@ public class TmplGen extends JCovCMDTool {
     }
 
     protected String exampleString() {
-        return "java -cp jcov.jar com.sun.tdk.jcov.TmplGen -include java.lang.* -type method -template template.xml classes";
+        return "java -cp jcov.jar com.sun.tdk.jcov.TmplGen -include java.lang.* -type method -template template.xml classesFile";
     }
 
     protected String getDescr() {
@@ -126,8 +129,44 @@ public class TmplGen extends JCovCMDTool {
         return true;
     }
 
+    public Vector<String> listClasses(File file) {
+        Vector<String> classes = new Vector<String>();
+        if (file.isDirectory()){
+            String[] entries = file.list();
+            for (int i = 0; i < entries.length; i++) {
+                File f = new File(file.getPath() + File.separator + entries[i]);
+                classes.addAll(listClasses(f));
+                }
+        }
+        else if (file.getPath().endsWith(".class")) {
+            JavapClass javapClass = new JavapClass();
+            javapClass.parseJavapFile(file.getAbsolutePath(), null);
+            if (javapClass.getPackageName() != null && javapClass.getClassName() != null)
+                classes.add(javapClass.getPackageName() + "." + javapClass.getClassName());
+        }
+        return classes;
+    }
+
+    public void saveClassesList(String[] files) {
+        Vector<String> classes = new Vector<String>();
+        for (String root : files) {
+            classes.addAll(listClasses(new File(root)));
+        }
+        try {
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(classesFile)), Charset.defaultCharset()));
+            for (String className : classes) {
+                writer.println(className);
+            }
+            writer.flush();
+            writer.close();
+        } catch (Exception e) { }
+
+
+    }
+
     public void generateAndSave(String[] files) throws IOException {
         setDefaultInstrumenter();
+        saveClassesList(files);
         for (String root : files) {
             if (root.endsWith(".jimage")){
                 readJImage(new File(root), true);
@@ -234,6 +273,8 @@ public class TmplGen extends JCovCMDTool {
                     //        DSC_OUTPUT,
                     DSC_VERBOSE,
                     com.sun.tdk.jcov.instrument.InstrumentationOptions.DSC_TEMPLATE,
+                    com.sun.tdk.jcov.instrument.InstrumentationOptions.DSC_CLASSES,
+                    com.sun.tdk.jcov.instrument.InstrumentationOptions.DSC_CLASSPATH,
                     com.sun.tdk.jcov.instrument.InstrumentationOptions.DSC_TYPE,
                     com.sun.tdk.jcov.instrument.InstrumentationOptions.DSC_INCLUDE,
                     com.sun.tdk.jcov.instrument.InstrumentationOptions.DSC_EXCLUDE,
@@ -262,6 +303,11 @@ public class TmplGen extends JCovCMDTool {
             Utils.setLoggingLevel(Level.INFO);
         }
 
+        classesFile = opts.getValue(InstrumentationOptions.DSC_CLASSES);
+        classPath = opts.getValue(InstrumentationOptions.DSC_CLASSPATH);
+        if(classPath != null) {
+            Utils.addToClasspath(new String[]{classPath});
+        }
         Utils.addToClasspath(files);
 
         flushPath = opts.getValue(ClassMorph.DSC_FLUSH_CLASSES);

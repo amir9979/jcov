@@ -47,11 +47,15 @@ public class InstrumentationOptions {
                 {"method", "only methods"},},
             "Create statistics only for the specified type", "all");
     public static final String XML_DEFAULT_TEMPLATE = "template.xml";
+    public static final String DEFAULT_CLASSES = "classes.txt";
     public final static OptionDescr DSC_TEMPLATE =
             new OptionDescr("template", new String[]{"t"}, "Pre-instrumented template specification.", OptionDescr.VAL_SINGLE,
             "Specifies file with xml based template of pre-instrumented classes. Each classfile presented\n"
             + " in this template should be statically instrumented. The instrumentation parameters should be\n"
             + "compatible for static and dynamic instrumentation.", XML_DEFAULT_TEMPLATE);
+    public final static OptionDescr DSC_CLASSES =
+            new OptionDescr("classes", new String[]{"c"}, "Path to dump the list of instrumented classes", OptionDescr.VAL_SINGLE,
+            "Specifies file to contain the list of instrumented classes.", DEFAULT_CLASSES);
     public final static OptionDescr DSC_MINCLUDE =
             new OptionDescr("include_module", new String[]{"im"}, "Filtering conditions.",
                     OptionDescr.VAL_MULTI, "Specify included classes by regular expression for modules.");
@@ -61,6 +65,9 @@ public class InstrumentationOptions {
     public final static OptionDescr DSC_INCLUDE =
             new OptionDescr("include", new String[]{"i"}, "Filtering conditions.",
             OptionDescr.VAL_MULTI, "Specify included classes by regular expression.");
+    public final static OptionDescr DSC_CLASSPATH =
+            new OptionDescr("classpath", new String[]{"cp"}, "Additional classpath",
+            OptionDescr.VAL_SINGLE, "Class search path of directories and zip/jar files.");
     public final static OptionDescr DSC_EXCLUDE =
             new OptionDescr("exclude", new String[]{"e"}, "", OptionDescr.VAL_MULTI,
             "Specify excluded classes by regular expression.");

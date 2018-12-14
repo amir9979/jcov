@@ -279,6 +279,9 @@ public class OverriddenClassWriter extends ClassWriter {
         if (in == null && superClassName == null) {
 
             in = getInputStreamForName(clName, ClassLoader.getSystemClassLoader(), false, ".clazz");
+            if (in == null) {
+                in = getInputStreamForName(clName, ClassLoader.getSystemClassLoader(), false, ".class");
+            }
 
             if (in == null) {
                 if (!ClassLoader.getSystemClassLoader().equals(loader)) {

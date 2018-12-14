@@ -252,7 +252,7 @@ public class GrabberManager extends JCovCMDTool {
         try {
             sock = new Socket("localhost", 3337);
             PrintStream ps = new PrintStream(sock.getOutputStream(), false, "UTF-8");
-            ps.println("save");
+            ps.println(COMM_SAVE.name);
             ps.flush();
             ps.close();
             if (!sock.isClosed()) {
@@ -267,7 +267,6 @@ public class GrabberManager extends JCovCMDTool {
                 sock.close();
             }
         }
-        System.out.println("Agent data saved!");
     }
 
 

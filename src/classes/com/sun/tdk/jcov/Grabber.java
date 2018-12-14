@@ -445,7 +445,6 @@ class Server extends Thread {
         this.filename_counter = 0;
         this.outTestList = outTestList;
         this.saveCount = maxCount;
-        this.setFileNameByPattern();
     }
 
     @Override
@@ -577,7 +576,6 @@ class Server extends Thread {
                             }
                         } catch (IOException ignore) {
                         }
-                        System.out.println("Server.this.templateName = " + Server.this.templateName);
                         Merger.Merge m = new Merger.Merge(res, Server.this.templateName);
                         try {
                             merger.mergeAndWrite(m, outTestList, fileName, null);
@@ -1118,18 +1116,8 @@ class Server extends Thread {
      * @param fileName
      */
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        this.fileName = (new File(this.fileName)).getParentFile().getAbsolutePath() + File.separator + fileName;
     }
-
-    public void setFileNameByPattern() {
-        this.setFileName(String.valueOf(this.filename_counter) + "_"+ this.fileNamePattern);
-    }
-
-    public void updateFileNameByCounter() {
-        this.filename_counter++;
-        this.setFileNameByPattern();
-    }
-
 
     public String getSaveBadData() {
         return saveBadData;
@@ -1804,7 +1792,7 @@ public class Grabber extends JCovCMDTool {
 
                 char[] c = new char[]{'p', 'h', 'c', 't', 'C', 'o', 'O', 's', 'S'};
                 String[] s = new String[]{Integer.toString(server.getPort()), hostName, Integer.toString(commandListener.getPort()), template, Integer.toString(maxCount), filename, outTestList, Boolean.toString(genscale), saveOnReceive ? "receive" : "exit"};
-                System.out.println(PropertyFinder.processMacroString(messageFormat, c, s));
+//                System.out.println(PropertyFinder.processMacroString(messageFormat, c, s));
 
                 String file = propfile;
                 if (file != null) {
