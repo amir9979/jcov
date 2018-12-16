@@ -231,16 +231,9 @@
 
         <mkdir dir="${jcov.classes}/META-INF"/>
         <mkdir dir="${jcov.classes}/META-INF/services"/>
-        <echo file="${jcov.classes}/META-INF/services/com.sun.tdk.jcov.report.ancfilters.DefaultAncFilter"
+        <echo file="${jcov.classes}/META-INF/services/com.sun.tdk.jcov.report.AncFilterFactory"
               append="false">
-            com.sun.tdk.jcov.report.ancfilters.ToStringANCFilter
-            com.sun.tdk.jcov.report.ancfilters.DeprecatedANCFilter
-            com.sun.tdk.jcov.report.ancfilters.EmptyANCFilter
-            com.sun.tdk.jcov.report.ancfilters.CatchANCFilter
-            com.sun.tdk.jcov.report.ancfilters.ThrowANCFilter
-            com.sun.tdk.jcov.report.ancfilters.SyntheticANCFilter
-            com.sun.tdk.jcov.report.ancfilters.GetterANCFilter
-            com.sun.tdk.jcov.report.ancfilters.SetterANCFilter
+            com.sun.tdk.jcov.report.ancfilters.BuiltInAncFilters
         </echo>
 
         <jar destfile="${build.dir}/jcov.jar" basedir="${jcov.classes}" index="false">
@@ -363,4 +356,20 @@
             description="Creates the build-distribution.">
     </target>
 
+    <target name="test" depends="build-jcov">
+        <mkdir dir="${result.dir}/test/classes" />
+        <javac includeantruntime="false" encoding="iso-8859-1" debug="true" target="1.8" source="1.8"
+               srcdir="${test.src.dir}"
+               sourcepath="${test.src.dir}"
+               classpath="${testngjar}:${build.dir}/jcov.jar"
+               destdir="${result.dir}/test/classes">
+        </javac>
+        <taskdef classname="org.testng.TestNGAntTask" classpath="${testngjar}" name="testng"/>
+        <testng failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" outputdir="${result.dir}/test/result" suitename="jcov" testname="TestNG tests" workingDir="${result.dir}/test/work" verbose="2">
+                <classfileset dir="${result.dir}/test/classes" includes="**/*Test.class" />
+            <classpath>
+                <path path="${testngjar}:${build.dir}/jcov.jar:${result.dir}/test/classes"/>
+            </classpath>
+        </testng>
+    </target>
 </project>

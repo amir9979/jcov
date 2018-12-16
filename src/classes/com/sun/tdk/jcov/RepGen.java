@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2018 Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -25,11 +25,12 @@
 package com.sun.tdk.jcov;
 
 import com.sun.tdk.jcov.instrument.DataMethod;
-import com.sun.tdk.jcov.instrument.DataField;
 import com.sun.tdk.jcov.instrument.DataClass;
+import com.sun.tdk.jcov.instrument.DataField;
 import com.sun.tdk.jcov.processing.DataProcessorSPI;
 import com.sun.tdk.jcov.report.AncFilter;
-import com.sun.tdk.jcov.report.ancfilters.DefaultAncFilter;
+import com.sun.tdk.jcov.report.ParameterizedAncFilter;
+import com.sun.tdk.jcov.report.AncFilterFactory;
 import com.sun.tdk.jcov.util.Utils;
 import com.sun.tdk.jcov.data.FileFormatException;
 import com.sun.tdk.jcov.data.Result;
@@ -57,13 +58,13 @@ import com.sun.tdk.jcov.tools.JCovCMDTool;
 import com.sun.tdk.jcov.tools.SPIDescr;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.sun.tdk.jcov.tools.OptionDescr.*;
 import java.io.File;
 import java.util.Arrays;
-import java.util.ServiceLoader;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
 
@@ -78,6 +79,7 @@ public class RepGen extends JCovCMDTool {
 
     final static String CUSTOM_REPORT_GENERATOR_SPI = "customreport.spi";
     final static String DATA_PROCESSOR_SPI = "dataprocessor.spi";
+    private static final String ANC_FILTER_PARAMETER_SEPARATOR = ":";
 
     // logger initialization
     static {
@@ -247,28 +249,50 @@ public class RepGen extends JCovCMDTool {
         }
 
         if (ancdeffilters != null) {
-            ServiceLoader<DefaultAncFilter> loader = ServiceLoader.load(DefaultAncFilter.class);
+            ServiceLoader<AncFilterFactory> loader = ServiceLoader.load(AncFilterFactory.class);
             List<AncFilter> defaultANCFiltersList = new ArrayList<AncFilter>();
-            if (ancfiltersClasses != null && ancfiltersClasses.length > 0){
+            if (ancfiltersClasses != null && ancfiltersClasses.length > 0) {
                 defaultANCFiltersList.addAll(Arrays.asList(ancfiltersClasses));
             }
-            if (ancdeffilters.length == 1 && ancdeffilters[0].equals("all")){
-                for (DefaultAncFilter filter : loader) {
-                    defaultANCFiltersList.add(filter);
+            if (ancdeffilters.length == 1 && ancdeffilters[0].equals("all")) {
+                for (AncFilterFactory factory : loader) {
+                    defaultANCFiltersList.addAll(factory.instantiateAll());
                 }
-            }
-            else {
+            } else {
                 for (String defaulAncFilter : ancdeffilters) {
                     boolean found = false;
-                    for (DefaultAncFilter filter : loader) {
-                        if (defaulAncFilter.equals(filter.getFilterName())) {
-                            defaultANCFiltersList.add(filter);
+                    String filterName, filterParameters;
+                    int separatorPosition = defaulAncFilter.indexOf(ANC_FILTER_PARAMETER_SEPARATOR);
+                    if (separatorPosition > -1) {
+                        filterName = defaulAncFilter.substring(0, separatorPosition);
+                        filterParameters = defaulAncFilter.substring(separatorPosition +
+                                ANC_FILTER_PARAMETER_SEPARATOR.length());
+                    } else {
+                        filterName = defaulAncFilter;
+                        filterParameters = null;
+                    }
+                    for (AncFilterFactory factory : loader) {
+                        AncFilter filter = factory.instantiate(filterName);
+                        if (filter != null) {
+                            if (filterParameters != null) {
+                                if (filter instanceof ParameterizedAncFilter) {
+                                    try {
+                                        ((ParameterizedAncFilter) filter).setParameter(filterParameters);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException("Unable to set parameter for filter " +
+                                                filterName + ":" + e.getMessage());
+                                    }
+                                } else {
+                                    throw new RuntimeException(filterName + " filter does not accept parameters: " + filter);
+                                }
+                            }
                             found = true;
+                            defaultANCFiltersList.add(filter);
                             break;
                         }
                     }
                     if (!found) {
-                        logger.log(Level.SEVERE, "There is no default ANC filter for \"{0}\" value", defaulAncFilter);
+                        throw new RuntimeException("There is no ANC filter for \"" + defaulAncFilter + "\" value");
                     }
                 }
             }
@@ -492,6 +516,10 @@ public class RepGen extends JCovCMDTool {
         return srcRootPath;
     }
 
+    public void setDataProcessorsSPIs(DataProcessorSPI[] dataProcessorSPIs){
+        this.dataProcessorSPIs = dataProcessorSPIs;
+    }
+
     /**
      * Reset all properties to defaults. reportGeneratorSPI = null; include =
      * new String[] {".*"}; exclude = new String[] {""}; fms = null; filter =
@@ -639,7 +667,8 @@ public class RepGen extends JCovCMDTool {
         if (classesPath != null) {
             try {
                 logger.log(Level.INFO, "-- Creating javap report");
-                new JavapRepGen(include, exclude).run(filenames[0], classesPath, outputDir);
+                setDataProcessorsSPIs(null);
+                new JavapRepGen(this).run(filenames[0], classesPath, outputDir);
                 return 0;
             } catch (Exception ex) {
                 logger.log(Level.SEVERE, "Error while creating javap report", ex);
@@ -844,7 +873,7 @@ public class RepGen extends JCovCMDTool {
                     "");
 
     final static OptionDescr DSC_ANC_DEFAULT_FILTERS =
-            new OptionDescr("ancdeffilters", new String[]{"ancdf"}, "Default ANC filters names to use in report", OptionDescr.VAL_MULTI,
+            new OptionDescr("ancdeffilters", new String[]{"ancdf"}, "Default ANC filter name to use in report", OptionDescr.VAL_MULTI,
                     "");
 
     /**

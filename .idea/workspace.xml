@@ -2,12 +2,52 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0443693c-0df9-4ee8-9b61-37d89ca43e3a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/asm-6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/asm-tree-6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/asm-util-6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/javatest.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/junit-4.12.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classes.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jcov.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jcov_runner.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/build.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/build.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/Tutorial.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/doc/document.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/example1/static_instr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/example2/dynamic_instr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/example3/static_instr_file.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/example4/one_command.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/example5/jcov_ant_tasks.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/example6/jcov_scales.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/src/com/oracle/demoapp/Plane.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/src/com/oracle/demoapp/figures/Disk.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/src/com/oracle/demoapp/figures/Square.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/src/com/oracle/demoapp/figures/abstractpack/Figure.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/test/TestDemoApp1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/test/TestDemoApp2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/tutorial.build.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/tutorial/tutorial.build.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/GrabberManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/TmplGen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/TmplGen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/constants/MiscConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/ClassMorph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/ClassMorph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/InstrumentationOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/InstrumentationOptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/OverriddenClassWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/OverriddenClassWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/report/javap/JavapClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/report/javap/JavapClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/AgentSocketSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/AgentSocketSaver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -294,7 +334,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="CollectDetect&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/CollectDetect.java&#10;execution&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;collect&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/Collect.java&#10;setfilename&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Server#setFileName&#10;sendcode&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#sendCode&#10;Grabber.java&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/Grabber.java&#10;tmpl&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/TmplGen.java&#10;saveAgentDataCommand&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#saveAgentDataCommand&#10;grabber&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/ant/Grabber.java&#10;listen&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;premain&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Agent#premain&#10;processclass&#9;PSI&#9;JAVA://com.sun.tdk.jcov.insert.AbstractUniversalInstrumenter#processClassDir&#10;xmlna&#9;PSI&#9;JAVA://com.sun.tdk.jcov.instrument.XmlNames&#10;processdi&#9;PSI&#9;JAVA://com.sun.tdk.jcov.insert.AbstractUniversalInstrumenter#processClassDir&#10;tmplgen&#9;PSI&#9;JAVA://com.sun.tdk.jcov.TmplGen&#10;JcovPortNumber&#9;PSI&#9;JAVA://com.sun.tdk.jcov.constants.MiscConstants#JcovPortNumber&#10;counts&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.Collect#counts&#10;JUnitExecutionListener&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;grabberManager&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544995347702" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544995969876" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../checkstyle" />
     <property name="project.structure.last.edited" value="Project" />

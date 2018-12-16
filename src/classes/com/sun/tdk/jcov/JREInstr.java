@@ -24,14 +24,15 @@
  */
 package com.sun.tdk.jcov;
 
-import com.sun.tdk.jcov.instrument.*;
+import com.sun.tdk.jcov.instrument.HashesAttribute;
+import com.sun.tdk.jcov.instrument.InstrumentationOptions;
+import com.sun.tdk.jcov.instrument.OverriddenClassWriter;
 import com.sun.tdk.jcov.runtime.JCovSESocketSaver;
 import com.sun.tdk.jcov.tools.EnvHandler;
 import com.sun.tdk.jcov.tools.JCovCMDTool;
 import com.sun.tdk.jcov.tools.OptionDescr;
 import com.sun.tdk.jcov.util.Utils;
 import org.objectweb.asm.*;
-import org.objectweb.asm.Attribute;
 
 import java.io.*;
 import java.net.URL;
@@ -39,6 +40,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -271,7 +273,7 @@ public class JREInstr extends JCovCMDTool {
             ClassReader cr = new ClassReader(in);
             ClassWriter cw = new OverriddenClassWriter(cr, ClassWriter.COMPUTE_FRAMES, cl);
 
-            ClassVisitor cv = new ClassVisitor(Opcodes.ASM6, cw) {
+            ClassVisitor cv = new ClassVisitor(Utils.ASM_API_VERSION, cw) {
                 @Override
                 public ModuleVisitor visitModule(String name, int access, String version) {
                     ModuleVisitor mv = super.visitModule(name, access, version);
@@ -310,6 +312,33 @@ public class JREInstr extends JCovCMDTool {
         }
     }
 
+    private boolean doCommand(String command, File where, String msg) throws IOException, InterruptedException {
+        Objects.requireNonNull(command);
+        Objects.requireNonNull(msg);
+        boolean success;
+        StringBuilder sb = new StringBuilder(msg + command);
+        ProcessBuilder pb = new ProcessBuilder(command.split("\\s+")).directory(where).redirectErrorStream(true);
+        Process p = null;
+        try {
+            p = pb.start();
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+                String s;
+                while ((s = br.readLine()) != null) {
+                    sb.append(System.lineSeparator()).append('\t').append(s);
+                }
+                success = p.waitFor() == 0;
+            }
+            if (!success) {
+                logger.log(Level.SEVERE, sb.toString());
+            }
+        } finally {
+            if (p != null) {
+                p.destroy();
+            }
+        }
+        return success;
+    }
+
     private File extractJMod(File jdk, File from, File to) {
         try {
             String name = from.getName();
@@ -318,12 +347,8 @@ public class JREInstr extends JCovCMDTool {
             }
             File modDir = new File(to, name);
             modDir.mkdirs();
-
             String command = jdk.getAbsolutePath() + File.separator + "bin" + File.separator + "jar xf " + from.getAbsolutePath();
-            Process process = Runtime.getRuntime().exec(command, null, modDir);
-            process.waitFor();
-            if (process.exitValue() != 0) {
-                logger.log(Level.SEVERE, "wrong command for unjar jmod: " + command);
+            if (!doCommand(command, modDir, "wrong command for unjar jmod: ")) {
                 return null;
             }
             return modDir;
@@ -346,11 +371,7 @@ public class JREInstr extends JCovCMDTool {
             }
             String mods = sb.toString().substring(0, sb.toString().length() - 1);
             command += mods + " --output instr_jimage_dir";
-
-            Process process = Runtime.getRuntime().exec(command, null, jmodDir.getParentFile());
-            process.waitFor();
-            if (process.exitValue() != 0) {
-                logger.log(Level.SEVERE, "wrong command for jlink mods: " + command);
+            if (!doCommand(command, jmodDir.getParentFile(), "wrong command for jlink mods: ")) {
                 return null;
             }
         } catch (Exception e) {
@@ -387,12 +408,7 @@ public class JREInstr extends JCovCMDTool {
                 }
             }
             command.append(" " + jmodDir.getName() + ".jmod");
-
-            Process process = Runtime.getRuntime().exec(command.toString(), null, modsDir);
-            process.waitFor();
-            if (process.exitValue() != 0) {
-                logger.log(Level.SEVERE, "wrong command for create jmod: " + command.toString());
-            }
+            doCommand(command.toString(),modsDir,"wrong command for create jmod: ");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "exception in process(create jmod)", e);
         }
@@ -402,34 +418,22 @@ public class JREInstr extends JCovCMDTool {
         try {
             String command = jimage.getParentFile().getParentFile().getParent() + File.separator + "bin" + File.separator + "jimage extract --dir " +
                     jimage.getParent() + File.separator + tempDirName + " " + jimage.getAbsolutePath();
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            if (process.exitValue() != 0) {
-                logger.log(Level.SEVERE, "wrong command for expand jimage: " + command);
-                return false;
-            }
+            return doCommand(command,null, "wrong command for expand jimage: ");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "exception in process(expanding jimage)", e);
             return false;
         }
-        return true;
     }
 
     private boolean createJimage(File dir, String new_jimage_path) {
         try {
             String command = dir.getParentFile().getParentFile().getParent() + File.separator + "bin" + File.separator + "jimage recreate --dir " +
                     dir + " " + new_jimage_path;
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            if (process.exitValue() != 0) {
-                logger.log(Level.SEVERE, "wrong command for create jimage: " + command);
-                return false;
-            }
+            return doCommand(command, null, "wrong command for create jimage: ");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "exception in process(expanding jimage)", e);
             return false;
         }
-        return true;
     }
 
     @Override
