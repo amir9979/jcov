@@ -10,31 +10,38 @@ import com.sun.tdk.jcov.GrabberManager;
 
 public class JUnitExecutionListener extends RunListener {
 
-    public void testRunStarted(Description description) throws Exception {
+    public void testRunStarted(Description description) {
     }
 
-    public void testRunFinished(Result result) throws Exception {
+    public void testRunFinished(Result result) {
     }
 
-    public void testStarted(Description description) throws Exception {
-        String testName = description.getClassName() + "."+ description.getMethodName();
-        GrabberManager.saveCommand();
-        GrabberManager.startNewTestCommand(testName);
-    }
-
-    public void testFinished(Description description) throws Exception {
+    public void testStarted(Description description) {
         try {
-        GrabberManager.saveAgentDataCommand();
-        GrabberManager.saveCommand();
-    } catch (Exception e) { e.printStackTrace();}
+            String testName = description.getClassName() + "." + description.getMethodName();
+            GrabberManager.startNewTestCommand(testName);
+        } catch (Exception e) {e.printStackTrace(); }
     }
 
-    public void testFailure(Failure failure) throws Exception {
+    public void testFinished(Description description) {
+        saveAll();
+    }
+
+    public void testFailure(Failure failure) {
     }
 
     public void testAssumptionFailure(Failure failure) {
     }
 
-    public void testIgnored(Description description) throws Exception {
+    public void testIgnored(Description description) {
+    }
+
+    private void saveAll() {
+        try {
+            GrabberManager.saveAgentDataCommand();
+            GrabberManager.saveCommand();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

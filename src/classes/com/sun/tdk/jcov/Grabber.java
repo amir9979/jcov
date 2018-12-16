@@ -803,7 +803,6 @@ class Server extends Thread {
         Grabber.logger.log(Level.INFO, "Server is saving cached data to {0}", fileName);
         saveData(data);
         Grabber.logger.log(Level.FINE, "Saving done");
-//        updateFileNameByCounter();
         clearData();
     }
 
@@ -1117,6 +1116,7 @@ class Server extends Thread {
      */
     public void setFileName(String fileName) {
         this.fileName = (new File(this.fileName)).getParentFile().getAbsolutePath() + File.separator + fileName;
+        saveData(data);
     }
 
     public String getSaveBadData() {
@@ -1169,7 +1169,7 @@ class CommandListener extends Thread {
         this.server = server;
         this.runCommand = runCommand;
 
-        serverSocket = new ServerSocket(commandPort);
+        serverSocket = new ServerSocket(commandPort, 500, null);
         this.commandPort = serverSocket.getLocalPort();
         this.hostName = hostName;
     }
@@ -1247,12 +1247,12 @@ class CommandListener extends Thread {
                         case MiscConstants.GRABBER_START_NEW_TEST_COMMAND:
                             BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.defaultCharset()));
                             String testName = reader.readLine();
-                            reader.close();
                             Grabber.logger.log(Level.INFO, "Server received start new test command with test {0}", testName);
                             server.setFileName(testName + ".xml");
                             socket.getOutputStream().write(1);
+                            socket.getOutputStream().flush();
                             socket.getOutputStream().close();
-                            in.close();
+                            reader.close();
                             break;
                         default:
                             Grabber.logger.log(Level.WARNING, "Unknown message '{0}' came from {0}", new Object[]{Integer.toString(command), socket.getInetAddress().getHostAddress()});
@@ -1265,6 +1265,7 @@ class CommandListener extends Thread {
                 } catch (IOException ex) {
                     if (serverSocket != null && !serverSocket.isClosed()) { // means that kill() was called
                         Grabber.logger.log(Level.SEVERE, "Exception occurred while processing command", ex);
+                        ex.printStackTrace();
                     }
                 } finally {
                     if (socket != null && !socket.isClosed()) {

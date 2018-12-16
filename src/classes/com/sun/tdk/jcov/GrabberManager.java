@@ -244,6 +244,7 @@ public class GrabberManager extends JCovCMDTool {
         try {
             tool.sendSaveCommand();
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -291,12 +292,13 @@ public class GrabberManager extends JCovCMDTool {
         this.host = host;
     }
 
-    private void sendCode(int code, String dataToSend) throws IOException {
+    private synchronized void sendCode(int code, String dataToSend) throws IOException {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
             OutputStream out = socket.getOutputStream();
             out.write(code);
+            out.flush();
             BufferedWriter outWriter = null;
             if (dataToSend != null) {
                 outWriter = new BufferedWriter(new OutputStreamWriter(out, Charset.defaultCharset()));
@@ -310,7 +312,8 @@ public class GrabberManager extends JCovCMDTool {
                 outWriter.close();
             }
             out.close();
-        } finally {
+        } catch (Exception e) {e.printStackTrace();}
+            finally {
             if (socket != null && !socket.isClosed()) {
                 socket.close();
             }

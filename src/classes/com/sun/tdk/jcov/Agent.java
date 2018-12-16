@@ -254,7 +254,7 @@ public class Agent extends JCovTool {
         @Override
         public void run() {
             try {
-                ServerSocket sock = new ServerSocket(port);
+                ServerSocket sock = new ServerSocket(port, 500, null);
                 while (true) {
                     try {
                         Socket s = sock.accept();
