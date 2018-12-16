@@ -102,6 +102,7 @@ public class AgentSocketSaver extends JCovSocketSaver {
             out.writeUTF(PropertyFinder.findValue("product", ""));  // productname  - 1+?bytes
             out.writeBoolean(root.getParams().isDynamicCollect());  // dynamic      - 1byte
             root.writeObject(out);
+            out.flush();
             out.close();
             s.close();
         } catch (InterruptedException ex) {

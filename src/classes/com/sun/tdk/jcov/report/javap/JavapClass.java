@@ -90,7 +90,7 @@ public class JavapClass {
      *
      * @param filePath - path to the class file
      */
-    void parseJavapFile(String filePath, String jarPath) {
+    public void parseJavapFile(String filePath, String jarPath) {
 
         try {
             BufferedReader inStream = null;

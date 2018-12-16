@@ -311,7 +311,9 @@ class Client extends Thread {
 class Server extends Thread {
     // config data
 
+    private String fileNamePattern;                // output file
     private String fileName;                // output file
+    private int filename_counter;                   // output filename counter - used to update the filename
     private final String templateName;      // template file
     private final int port;                 // port to listen for client connections
     private int saveCount;                  // maximum connections to manage. Infinite if 0
@@ -372,7 +374,7 @@ class Server extends Thread {
         this.once = once;
         this.templateName = template;
         this.hostName = host;
-        this.saveAtReceive = saveAtRecieve;
+        this.saveAtReceive = false;
         this.genscale = genscale;
         this.mergeByTestNames = mergeByTestNames;
 
@@ -438,7 +440,9 @@ class Server extends Thread {
             boolean saveAtReceive, boolean genscale, boolean mergeByTestNames) throws BindException, IOException {
         this(port, once, template, host, saveAtReceive, genscale || outTestList != null, mergeByTestNames);
 
-        this.fileName = output;
+        this.fileNamePattern = output;
+        this.fileName = this.fileNamePattern;
+        this.filename_counter = 0;
         this.outTestList = outTestList;
         this.saveCount = maxCount;
     }
@@ -572,7 +576,6 @@ class Server extends Thread {
                             }
                         } catch (IOException ignore) {
                         }
-                        System.out.println("Server.this.templateName = " + Server.this.templateName);
                         Merger.Merge m = new Merger.Merge(res, Server.this.templateName);
                         try {
                             merger.mergeAndWrite(m, outTestList, fileName, null);
@@ -800,6 +803,7 @@ class Server extends Thread {
         Grabber.logger.log(Level.INFO, "Server is saving cached data to {0}", fileName);
         saveData(data);
         Grabber.logger.log(Level.FINE, "Saving done");
+        clearData();
     }
 
     /**
@@ -854,6 +858,19 @@ class Server extends Thread {
 //            ex.printStackTrace();
         }
     }
+    /**
+     * Clear data
+     */
+    private synchronized void clearData() {
+        try {
+            for (int i = 0; i < data.length; ++i) {
+                data[i] = 0;
+            }
+        } catch (Exception ex) {
+            Grabber.logger.log(Level.SEVERE, "Error while clearing data", ex);
+//            ex.printStackTrace();
+        }
+    }
 
     void increaseReserved(long reserve) {
         reservedMemory += reserve;
@@ -902,6 +919,7 @@ class Server extends Thread {
                         dataRoot.update();
                         FileSaver fs = FileSaver.getFileSaver(dataRoot, fileName + dumpCount, templateName, MERGE.OVERWRITE, false, true);
                         fs.saveResults(fileName + dumpCount);
+                        Grabber.logger.log(Level.FINE, "saving results to {0}", fileName + dumpCount);
                         if (outTestList != null) {
                             Utils.writeLines(outTestList + dumpCount, tests.toArray(new String[tests.size()]));
                             tests.clear();
@@ -1097,7 +1115,8 @@ class Server extends Thread {
      * @param fileName
      */
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        this.fileName = (new File(this.fileName)).getParentFile().getAbsolutePath() + File.separator + fileName;
+        saveData(data);
     }
 
     public String getSaveBadData() {
@@ -1150,7 +1169,7 @@ class CommandListener extends Thread {
         this.server = server;
         this.runCommand = runCommand;
 
-        serverSocket = new ServerSocket(commandPort);
+        serverSocket = new ServerSocket(commandPort, 500, null);
         this.commandPort = serverSocket.getLocalPort();
         this.hostName = hostName;
     }
@@ -1225,6 +1244,16 @@ class CommandListener extends Thread {
                             in.close();
                             out.close();
                             break;
+                        case MiscConstants.GRABBER_START_NEW_TEST_COMMAND:
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.defaultCharset()));
+                            String testName = reader.readLine();
+                            Grabber.logger.log(Level.INFO, "Server received start new test command with test {0}", testName);
+                            server.setFileName(testName + ".xml");
+                            socket.getOutputStream().write(1);
+                            socket.getOutputStream().flush();
+                            socket.getOutputStream().close();
+                            reader.close();
+                            break;
                         default:
                             Grabber.logger.log(Level.WARNING, "Unknown message '{0}' came from {0}", new Object[]{Integer.toString(command), socket.getInetAddress().getHostAddress()});
                             break;
@@ -1236,6 +1265,7 @@ class CommandListener extends Thread {
                 } catch (IOException ex) {
                     if (serverSocket != null && !serverSocket.isClosed()) { // means that kill() was called
                         Grabber.logger.log(Level.SEVERE, "Exception occurred while processing command", ex);
+                        ex.printStackTrace();
                     }
                 } finally {
                     if (socket != null && !socket.isClosed()) {
@@ -1763,7 +1793,7 @@ public class Grabber extends JCovCMDTool {
 
                 char[] c = new char[]{'p', 'h', 'c', 't', 'C', 'o', 'O', 's', 'S'};
                 String[] s = new String[]{Integer.toString(server.getPort()), hostName, Integer.toString(commandListener.getPort()), template, Integer.toString(maxCount), filename, outTestList, Boolean.toString(genscale), saveOnReceive ? "receive" : "exit"};
-                System.out.println(PropertyFinder.processMacroString(messageFormat, c, s));
+//                System.out.println(PropertyFinder.processMacroString(messageFormat, c, s));
 
                 String file = propfile;
                 if (file != null) {

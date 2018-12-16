@@ -182,6 +182,7 @@ public class Agent extends JCovTool {
                     }
                 } catch (Throwable e) {
                     logger.log(Level.SEVERE, "Adaption failed for {0} with :{1}", new Object[]{className, e});
+//                    System.out.println("failed to transform class " + className);
                     e.printStackTrace();
                 } finally {
                     CollectDetect.leaveInstrumentationCode(); // release instrumentation lock
@@ -252,24 +253,25 @@ public class Agent extends JCovTool {
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    ServerSocket sock = new ServerSocket(port);
-                    Socket s = sock.accept();
-//                    System.out.println("Accepted");
-                    InputStream is = s.getInputStream();
-                    byte[] buff = new byte[1024];
-                    int l;
-                    String rest = "";
-                    while ((l = is.read(buff)) > 0) {
-                        String msg = rest + new String(buff, 0, l, Charset.defaultCharset());
-//                        System.out.println("Message: " + msg);
-                        rest = performTask(msg, s);
+            try {
+                ServerSocket sock = new ServerSocket(port, 500, null);
+                while (true) {
+                    try {
+                        Socket s = sock.accept();
+                        InputStream is = s.getInputStream();
+                        byte[] buff = new byte[1024];
+                        int l;
+                        String rest = "";
+                        while ((l = is.read(buff)) > 0) {
+                            String msg = rest + new String(buff, 0, l, Charset.defaultCharset());
+                            rest = performTask(msg, s);
+                        }
+                    } catch (IOException ex) {
+                        logger.log(Level.SEVERE, "Network IOException", ex);
                     }
-                    sock.close();
-                } catch (IOException ex) {
-                    logger.log(Level.SEVERE, "Network IOException", ex);
                 }
+            } catch (IOException ex) {
+                logger.log(Level.SEVERE, "Network IOException", ex);
             }
         }
 
@@ -816,15 +818,18 @@ public class Agent extends JCovTool {
             Utils.checkFileNotNull(filename, "output filename", Utils.CheckOptions.FILE_NOTISDIR, Utils.CheckOptions.FILE_PARENTEXISTS);
         }
 
+        int port = 3337;
         if (opts.isSet(DSC_PORT)) {
-            CommandThread cmdThread = new CommandThread(Utils.checkedToInt(opts.getValue(DSC_PORT), "command listener port number", Utils.CheckOptions.INT_POSITIVE),
-                    new InstrumentationParams(true, instrumentNative, instrumentField, detectInternal,
-                    instrumentAbstract ? InstrumentationOptions.ABSTRACTMODE.DIRECT : InstrumentationOptions.ABSTRACTMODE.NONE,
-                    include, exclude, callerInclude, callerExclude, mode, saveBegin, saveEnd)
-                    .setInstrumentAnonymous(instrumentAnonymous)
-                    .setInstrumentSynthetic(instrumentSynthetic));
-            cmdThread.start();
+            port = Utils.checkedToInt(opts.getValue(DSC_PORT), "command listener port number", Utils.CheckOptions.INT_POSITIVE);
         }
+        CommandThread cmdThread = new CommandThread(3337,
+                new InstrumentationParams(true, instrumentNative, instrumentField, detectInternal,
+                instrumentAbstract ? InstrumentationOptions.ABSTRACTMODE.DIRECT : InstrumentationOptions.ABSTRACTMODE.NONE,
+                include, exclude, callerInclude, callerExclude, mode, saveBegin, saveEnd)
+                .setInstrumentAnonymous(instrumentAnonymous)
+                .setInstrumentSynthetic(instrumentSynthetic));
+        cmdThread.start();
+
 
         return SUCCESS_EXIT_CODE;
     }

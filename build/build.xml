@@ -33,11 +33,13 @@
 
     <!-- Build area -->
     <property name="build.dir" location="${result.dir}/jcov_${build.version}"/>
-    <property name="jcov.classpath" value="${asm.jar}:${asm.util.jar}:${asm.tree.jar}:${java.home}/lib/tools.jar"/>
+    <property name="jcov.classpath" value="${asm.jar}:${junit.jar}:${asm.util.jar}:${asm.tree.jar}:${java.home}/lib/tools.jar"/>
 
     <!-- Temp dir is for files which do not appear in release directory -->
     <property name="tmp.dir" location="${result.dir}/temp"/>
 
+    <property name="listener.classes" location="${tmp.dir}/listener_classes"/>
+    <property name="listener.src" location="${tmp.dir}/listener_src"/>
     <property name="jcov.classes" location="${tmp.dir}/jcov_classes"/>
     <property name="jcov.src.update" location="${tmp.dir}/jcov_src_update"/>
 
@@ -51,6 +53,12 @@
 
     <patternset id="jcov.files">
         <include name="com/sun/tdk/jcov/**"/>
+        <include name="resources/**"/>
+    </patternset>
+    
+	<patternset id="listener.files">
+        <include name="com/sun/tdk/jcov/**"/>
+        <include name="com/sun/tdk/listener/**"/>
         <include name="resources/**"/>
     </patternset>
 
@@ -87,6 +95,10 @@
     <patternset id="asm.files">
         <include name="org/objectweb/asm/**"/>
     </patternset>
+	
+    <patternset id="junit.files">
+        <include name="org/junit/**"/>
+    </patternset>
 
     <target name="clean" description="clean build data">
 
@@ -109,6 +121,8 @@
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${tmp.dir}"/>
         <mkdir dir="${jcov.src.update}"/>
+        <mkdir dir="${listener.classes}"/>
+        <mkdir dir="${listener.src}"/>
         <mkdir dir="${jcov.classes}"/>
 
     </target>
@@ -178,6 +192,26 @@
         <copy todir="${jcov.classes}">
             <fileset refid="jcov.resources.files"/>
         </copy>
+        
+		
+		<copy todir="${listener.src}">
+			<fileset dir="${src.dir}">
+                <patternset refid="listener.files"/>
+            </fileset>
+        </copy>
+		
+		<javac includeantruntime="true" encoding="iso-8859-1" debug="true" target="1.7" source="1.7"
+               srcdir="${listener.src}"
+               destdir="${listener.classes}"
+               classpath="${jcov.classpath}">
+            <patternset refid="listener.files"/>
+        </javac>
+
+		
+		<copy todir="${listener.classes}">
+            <fileset refid="jcov.resources.files"/>
+        </copy>
+        
     </target>
 
     <patternset id="jcov.services">
@@ -188,6 +222,12 @@
         <unjar src="${asm.jar}" dest="${jcov.classes}"/>
         <unjar src="${asm.tree.jar}" dest="${jcov.classes}"/>
         <unjar src="${asm.util.jar}" dest="${jcov.classes}"/>
+        <unjar src="${junit.jar}" dest="${jcov.classes}"/>
+
+        <unjar src="${asm.jar}" dest="${listener.classes}"/>
+        <unjar src="${asm.tree.jar}" dest="${listener.classes}"/>
+        <unjar src="${asm.util.jar}" dest="${listener.classes}"/>
+        <unjar src="${junit.jar}" dest="${listener.classes}"/>
 
         <mkdir dir="${jcov.classes}/META-INF"/>
         <mkdir dir="${jcov.classes}/META-INF/services"/>
@@ -208,6 +248,23 @@
 
             <patternset refid="jcov.files"/>
             <patternset refid="asm.files"/>
+            <patternset refid="jcov.services"/>
+        </jar>
+        
+		<jar destfile="${build.dir}/listener.jar" basedir="${listener.classes}" index="false">
+            <manifest>
+                <attribute name="Built-By"   value="${user.name}"/>
+                <attribute name="Premain-Class" value="com.sun.tdk.jcov.Agent"/>
+                <attribute name="Boot-Class-Path" value="listener.jar"/>
+                <attribute name="Main-Class" value="com.sun.tdk.jcov.Helper"/>
+                <attribute name="Can-Retransform-Classes" value="true"/>
+                <attribute name="Can-Set-Native-Method-Prefix" value="true" />
+            </manifest>
+
+            <patternset refid="listener.files"/>
+            <patternset refid="jcov.files"/>
+            <patternset refid="asm.files"/>
+            <patternset refid="junit.files"/>
             <patternset refid="jcov.services"/>
         </jar>
 
