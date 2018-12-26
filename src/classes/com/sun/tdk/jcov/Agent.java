@@ -461,6 +461,7 @@ public class Agent extends JCovTool {
                     && !c.getName().replace('.', '/').equals("jdk/internal/reflect/Reflection")
                     && !c.getName().replace('.', '/').equals("sun/reflect/Reflection")) {
                 classes[keep++] = c;
+                logger.log(Level.INFO, "{0} - added to classes list", c.getName());
             }
         }
         transformer.ignoreLoads = false;
@@ -485,6 +486,7 @@ public class Agent extends JCovTool {
                     && inst.isModifiableClass(c)
                     && classMorph.shouldTransform(c.getName().replace('.', '/'))) {
                 allClasses[keep++] = c;
+                logger.log(Level.INFO, "{0} - added to all classes list", c.getName());
             }
         }
         if (keep > 0) {
