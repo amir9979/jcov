@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0443693c-0df9-4ee8-9b61-37d89ca43e3a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/Grabber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/logging.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/logging.properties" afterDir="false" />
-    </list>
+    <list default="true" id="0443693c-0df9-4ee8-9b61-37d89ca43e3a" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -317,7 +312,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="execu&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;ex&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;collect&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/Collect.java&#10;logging.properties&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/logging.properties&#10;premain&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Agent#premain&#10;setfilename&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Server#setFileName&#10;CollectDetect&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/CollectDetect.java&#10;execution&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;sendcode&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#sendCode&#10;Grabber.java&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/Grabber.java&#10;tmpl&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/TmplGen.java&#10;saveAgentDataCommand&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#saveAgentDataCommand&#10;grabber&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/ant/Grabber.java&#10;listen&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;processclass&#9;PSI&#9;JAVA://com.sun.tdk.jcov.insert.AbstractUniversalInstrumenter#processClassDir&#10;xmlna&#9;PSI&#9;JAVA://com.sun.tdk.jcov.instrument.XmlNames&#10;processdi&#9;PSI&#9;JAVA://com.sun.tdk.jcov.insert.AbstractUniversalInstrumenter#processClassDir&#10;tmplgen&#9;PSI&#9;JAVA://com.sun.tdk.jcov.TmplGen&#10;JcovPortNumber&#9;PSI&#9;JAVA://com.sun.tdk.jcov.constants.MiscConstants#JcovPortNumber&#10;counts&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.Collect#counts&#10;JUnitExecutionListener&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;grabberManager&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545808140606" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545808707018" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../checkstyle" />
     <property name="project.structure.last.edited" value="Project" />
@@ -390,9 +385,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16684435" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16684435" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -400,7 +394,7 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.18763557" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.18763557" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.21908894" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
