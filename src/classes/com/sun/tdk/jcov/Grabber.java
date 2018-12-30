@@ -1117,7 +1117,6 @@ class Server extends Thread {
     public void setFileName(String fileName) {
         this.fileName = (new File(this.fileName)).getParentFile().getAbsolutePath() + File.separator + fileName;
         clearData();
-        saveData(data);
     }
 
     public String getSaveBadData() {

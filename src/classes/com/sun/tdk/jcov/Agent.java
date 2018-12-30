@@ -195,7 +195,7 @@ public class Agent extends JCovTool {
     /**
      * Class for listening agent commands
      */
-    private static class CommandThread extends Thread {
+    public static class CommandThread extends Thread {
 
         /**
          * Agent commands
@@ -296,11 +296,7 @@ public class Agent extends JCovTool {
                     switch (cmd) {
                         case SAVE:
                             msg = msg.substring(cmd.cmd().length());
-                            if (Collect.enabled) {
-                                Collect.disable();
-                                Collect.saveResults();
-                                params.enable();
-                            }
+                            saveCollectData();
                             ps.print(COMMAND.SAVED.cmd());
                             ps.flush();
                             break;
@@ -330,6 +326,16 @@ public class Agent extends JCovTool {
             }
 
             return msg;
+        }
+
+        public static void saveCollectData() {
+            if (Collect.enabled) {
+                Collect.disable();
+                Collect.saveResults();
+                Collect.enableCounts();
+                CollectDetect.enableDetectInternal();
+                Collect.enabled = true;
+            }
         }
 
         /**

@@ -33,7 +33,7 @@
 
     <!-- Build area -->
     <property name="build.dir" location="${result.dir}/jcov_${build.version}"/>
-    <property name="jcov.classpath" value="${asm.jar}:${junit.jar}:${tools.jar}:${asm.util.jar}:${asm.tree.jar}:${java.home}/lib/tools.jar"/>
+    <property name="jcov.classpath" value="${asm.jar}:${junit.jar}:${asm.util.jar}:${asm.tree.jar}:${java.home}/lib/tools.jar"/>
 
     <!-- Temp dir is for files which do not appear in release directory -->
     <property name="tmp.dir" location="${result.dir}/temp"/>
@@ -223,12 +223,10 @@
         <unjar src="${asm.tree.jar}" dest="${jcov.classes}"/>
         <unjar src="${asm.util.jar}" dest="${jcov.classes}"/>
         <unjar src="${junit.jar}" dest="${jcov.classes}"/>
-        <unjar src="${tools.jar}" dest="${jcov.classes}"/>
 
         <unjar src="${asm.jar}" dest="${listener.classes}"/>
         <unjar src="${asm.tree.jar}" dest="${listener.classes}"/>
         <unjar src="${asm.util.jar}" dest="${listener.classes}"/>
-        <unjar src="${tools.jar}" dest="${listener.classes}"/>
         <unjar src="${junit.jar}" dest="${listener.classes}"/>
 
         <mkdir dir="${jcov.classes}/META-INF"/>

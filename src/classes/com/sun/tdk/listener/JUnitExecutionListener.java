@@ -6,6 +6,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import java.net.Socket;
+import com.sun.tdk.jcov.Agent.CommandThread;
 import com.sun.tdk.jcov.GrabberManager;
 
 public class JUnitExecutionListener extends RunListener {
@@ -38,7 +39,8 @@ public class JUnitExecutionListener extends RunListener {
 
     private void saveAll() {
         try {
-            GrabberManager.saveAgentDataCommand();
+            CommandThread.saveCollectData();
+            //GrabberManager.saveAgentDataCommand();
             GrabberManager.saveCommand();
         } catch (Exception e) {
             e.printStackTrace();

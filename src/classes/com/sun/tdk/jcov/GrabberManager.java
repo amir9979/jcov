@@ -255,13 +255,13 @@ public class GrabberManager extends JCovCMDTool {
             PrintStream ps = new PrintStream(sock.getOutputStream(), false, "UTF-8");
             ps.println(COMM_SAVE.name);
             ps.flush();
-            ps.close();
             if (!sock.isClosed()) {
                 InputStream is = sock.getInputStream();
                 byte[] buff = new byte[1024];
                 is.read(buff);
                 is.close();
             }
+            ps.close();
         } catch (Exception e) { e.printStackTrace();}
         finally {
             if (sock != null && !sock.isClosed()) {
