@@ -21,7 +21,8 @@ public class JUnitExecutionListener extends RunListener {
     public void testStarted(Description description) {
         try {
             String testName = description.getClassName() + "." + description.getMethodName();
-            GrabberManager.startNewTestCommand(testName);
+            int port = Integer.parseInt(System.getenv("JcovGrabberCommandPort"));
+            GrabberManager.startNewTestCommand(testName, port);
         } catch (Exception e) {e.printStackTrace(); }
     }
 

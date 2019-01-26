@@ -271,8 +271,8 @@ public class GrabberManager extends JCovCMDTool {
     }
 
 
-        public static void startNewTestCommand(String testName) {
-        GrabberManager tool = new GrabberManager();
+        public static void startNewTestCommand(String testName, int port) {
+        GrabberManager tool = new GrabberManager(port, "localhost");
         try {
             tool.sendStartNewTestCommand(testName);
         } catch (Exception ex) {
