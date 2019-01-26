@@ -1,5 +1,6 @@
 package com.sun.tdk.listener;
 
+import com.sun.tdk.jcov.constants.MiscConstants;
 import com.sun.tdk.jcov.util.Utils;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -41,7 +42,8 @@ public class JUnitExecutionListener extends RunListener {
         try {
             CommandThread.saveCollectData();
             //GrabberManager.saveAgentDataCommand();
-            GrabberManager.saveCommand();
+            int port = Integer.parseInt(System.getenv("JcovGrabberCommandPort"));
+            GrabberManager.saveCommand(port);
         } catch (Exception e) {
             e.printStackTrace();
         }
