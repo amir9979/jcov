@@ -35,6 +35,36 @@ package com.sun.tdk.jcov.runtime;
  * @author Dmitry Fazunenko
  * @author Alexey Fedorchenko
  */
+
+class List {
+    private long lst[];
+    private int last;
+    public List() {
+        lst = new long[10];
+    }
+
+    public void add(long elem) {
+        if(last < lst.length)
+            lst[last++] = elem;
+        else {
+            long newList[] = new long[lst.length*2];
+            System.arraycopy(lst, 0, newList, 0, lst.length);
+            lst = newList;
+            lst[last++] = elem;
+        }
+    }
+
+    public long get(int index) {
+        if(index < lst.length)
+            return lst[index];
+        return -1;
+    }
+
+    public long[] getArray() {
+        return lst;
+    }
+}
+
 public class Collect {
 
     // coverage data
@@ -44,6 +74,9 @@ public class Collect {
     private static int nextSlot = 0;
     private static long counts[];
     private static long counts_[];
+    private static List adjacencies[];
+    private static List adjacencies_[];
+    private static long lastHitted = -1;
     // -- coverage data
     // savers
     private static JCovSaver[] savers = new JCovSaver[MAX_SAVERS];
@@ -69,7 +102,10 @@ public class Collect {
         if (nextSlot >= counts.length) {
             long[] newCounts = new long[nextSlot * 2];
             System.arraycopy(counts, 0, newCounts, 0, counts.length);
+            List[] newAdjacencies = new List[nextSlot * 2];
+            System.arraycopy(adjacencies, 0, newAdjacencies, 0, adjacencies.length);
             counts_ = counts = newCounts;
+            adjacencies_ = adjacencies = newAdjacencies;
 //            throw new Error("Method slot count exceeded");
         }
         return nextSlot++;
@@ -94,6 +130,8 @@ public class Collect {
      */
     public static void hit(int slot) {
         counts[slot]++;
+        adjacencies[slot].add(lastHitted);
+        lastHitted = slot;
     }
 
     /**
@@ -129,6 +167,10 @@ public class Collect {
         return counts_;
     }
 
+    public static List[] adjacencies() {
+        return adjacencies_;
+    }
+
     /**
      * <p> Get coverage data on a certain member </p>
      *
@@ -137,6 +179,10 @@ public class Collect {
      */
     public static long countFor(int slot) {
         return counts_[slot];
+    }
+
+    public static long[] adjacenciesFor(int slot) {
+        return adjacencies_[slot].getArray();
     }
 
     /**
@@ -157,6 +203,7 @@ public class Collect {
      */
     public static void enableCounts() {
         counts_ = counts = new long[SLOTS];
+        adjacencies_ = adjacencies = new List[SLOTS];
     }
 
     /**
@@ -209,6 +256,8 @@ public class Collect {
         }
         // Disable hits. Can't use "enabled = false" as it will result in Agent malfunction
         counts = new long[counts.length]; // reset counts[] that are collecting hits - real hits will be available in counts_
+        adjacencies = new List[adjacencies.length]; // reset counts[] that are collecting hits - real hits will be available in counts_
+        lastHitted = -1;
 
         String s = PropertyFinder.findValue("saver", null);
         if (s != null) {
@@ -246,6 +295,7 @@ public class Collect {
             }
         }
         counts_ = counts; // repoint counts_[] that are answering DataRoot about hits to newly created counts[]
+        adjacencies_ = adjacencies; // repoint counts_[] that are answering DataRoot about hits to newly created counts[]
         // Enable hits. Can't use "enabled = false" as it will result in Agent malfunction
     }
 

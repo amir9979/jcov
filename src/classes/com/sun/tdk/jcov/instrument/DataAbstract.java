@@ -109,12 +109,12 @@ public abstract class DataAbstract {
     }
 
     void xmlAccessFlags(XmlContext ctx, int access) {
-        ctx.print(" " + XmlNames.FLAGS + "='");
+        ctx.print(" " + XmlNames.FLAGS + "=\"");
         String[] flags = accessFlags(access);
         for (String fl : flags) {
-            ctx.print(" " + fl);
+            ctx.print(";" + fl);
         }
-        ctx.print("'");
+        ctx.print("\"");
     }
 
     /**
