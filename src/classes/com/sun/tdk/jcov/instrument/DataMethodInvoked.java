@@ -126,7 +126,7 @@ public class DataMethodInvoked extends DataMethod {
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
                 printScale(ctx);
             }
         };
@@ -277,7 +277,7 @@ public class DataMethodInvoked extends DataMethod {
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
                 printScale(ctx);
             }
         };

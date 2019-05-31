@@ -97,7 +97,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
                 printScale(ctx);
             }
         };
@@ -138,7 +138,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
                 printScale(ctx);
             }
         };
@@ -173,7 +173,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
                 printScale(ctx);
             }
         };
@@ -213,6 +213,17 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
     public void setCount(long count) {
         entryBlock.setCount(count);
     }
+
+
+    public long[] getAdjacencies() {
+        return entryBlock.getAdjacencies();
+    }
+
+    public void setAdjacencies(long[] adjacencies) {
+        entryBlock.setAdjacencies(adjacencies);
+    }
+
+
 
     /**
      * Set the scale information of this method
@@ -284,6 +295,15 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
 
         entryBlock.mergeScale(m.entryBlock);
         entryBlock.setCount(getCount() + m.getCount());
+        long[] adjacencies = new long[getAdjacencies().length + m.getAdjacencies().length];
+        int i=0;
+        for (;i< getAdjacencies().length;i++){
+            adjacencies[i] = getAdjacencies()[i];
+        }
+        for (int j=0;j< m.getAdjacencies().length;j++){
+            adjacencies[i+j] = m.getAdjacencies()[j];
+        }
+        entryBlock.setAdjacencies(adjacencies);
     }
 
     @Override
@@ -319,7 +339,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
                 printScale(ctx);
             }
         };

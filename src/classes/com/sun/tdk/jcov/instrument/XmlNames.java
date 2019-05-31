@@ -105,5 +105,5 @@ public class XmlNames {
     public static final String INNER_CLASS = "inner";
     public static final String MODULE_NAME = "moduleName";
     public static final String NO_MODULE = "no_module";
-    public static final String CALLER_ID = "caller_id";
+    public static final String CALLERS = "callers";
 }

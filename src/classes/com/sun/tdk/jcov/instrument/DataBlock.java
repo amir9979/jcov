@@ -49,6 +49,7 @@ public abstract class DataBlock extends LocationRef {
 
     protected int slot;
     protected long count;
+    protected long[] adjacencies;
     protected boolean attached;
     protected Scale scale;
 
@@ -59,6 +60,7 @@ public abstract class DataBlock extends LocationRef {
         super(rootId);
         this.slot = Collect.newSlot();
         attached = true;
+        adjacencies = new long[0];
     }
 
     DataBlock(int rootId, int slot, boolean attached, long count) {
@@ -66,6 +68,7 @@ public abstract class DataBlock extends LocationRef {
         this.slot = slot;
         this.attached = attached;
         this.count = count;
+        adjacencies = new long[0];
 
         if (attached) {
             setCollectCount(count);
@@ -124,6 +127,33 @@ public abstract class DataBlock extends LocationRef {
             return count;
         }
     }
+    public long[] getAdjacencies() {
+        if (attached) {
+            return collectAdjacencies();
+        } else {
+            return adjacencies;
+        }
+    }
+
+
+    public String getAdjacenciesString() {
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        int j = 0;
+        while(i < adjacencies.length) {
+            if (adjacencies[i] == -1){
+                i++;
+                continue;
+            }
+            if (j > 0) {
+                result.append(';');
+            }
+            result.append(adjacencies[i]);
+            j++;
+            i++;
+        }
+        return result.toString();
+    }
 
     /**
      * Set the count of times this block was hit
@@ -138,6 +168,10 @@ public abstract class DataBlock extends LocationRef {
         this.count = count;
     }
 
+    public void setAdjacencies(long[] adjacencies) {
+        this.adjacencies = adjacencies;
+    }
+
     /**
      * Default implementations
      *
@@ -148,6 +182,10 @@ public abstract class DataBlock extends LocationRef {
 
     protected long collectCount() {
         return Collect.countFor(slot);
+    }
+
+    protected long[] collectAdjacencies() {
+        return Collect.adjacenciesFor(slot);
     }
 
     protected void setCollectCount(long count) {
@@ -173,7 +211,7 @@ public abstract class DataBlock extends LocationRef {
     void xmlAttrs(XmlContext ctx) {
         super.xmlAttrs(ctx);
         ctx.attr(XmlNames.ID, getId());
-        ctx.attr(XmlNames.COUNT, getCount());
+        ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
 
         printScale(ctx);
     }
@@ -286,6 +324,11 @@ public abstract class DataBlock extends LocationRef {
         super.writeObject(out);
         out.writeLong(getCount());
         out.writeInt(slot);
+        adjacencies = getAdjacencies();
+        out.writeInt(adjacencies.length);
+        for(int i=0;i<adjacencies.length;i++){
+            out.writeLong(adjacencies[i]);
+        }
 
         if (scale != null) {
             out.writeBoolean(true);
@@ -299,6 +342,11 @@ public abstract class DataBlock extends LocationRef {
         super(rootId, in);
         count = in.readLong();
         slot = in.readInt();
+        int adjacenciesLength = in.readInt();
+        adjacencies = new long[adjacenciesLength];
+        for(int i=0;i<adjacencies.length;i++){
+            adjacencies[i] = in.readLong();
+        }
 
         if (in.readBoolean()) {
             scale = new Scale(in);

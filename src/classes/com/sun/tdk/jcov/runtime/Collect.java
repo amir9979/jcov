@@ -40,14 +40,25 @@ class List {
     private long lst[];
     private int last;
     public List() {
-        lst = new long[10];
+        lst = new long[0];
+        last = 0;
+    }
+
+    public long[] getArray() {
+        return lst;
     }
 
     public void add(long elem) {
+        if (elem == -1){
+            return;
+        }
         if(last < lst.length)
             lst[last++] = elem;
         else {
-            long newList[] = new long[lst.length*2];
+            long newList[] = new long[lst.length*2+1];
+            for(int i=0; i<newList.length; i++){
+                newList[i] = -1;
+            }
             System.arraycopy(lst, 0, newList, 0, lst.length);
             lst = newList;
             lst[last++] = elem;
@@ -60,15 +71,12 @@ class List {
         return -1;
     }
 
-    public long[] getArray() {
-        return lst;
-    }
 }
 
 public class Collect {
 
     // coverage data
-    public static final int MAX_SLOTS = 2000000;
+    public static final int MAX_SLOTS = 20000;
     public static int SLOTS = MAX_SLOTS;
     private static final int MAX_SAVERS = 10;
     private static int nextSlot = 0;
@@ -102,12 +110,16 @@ public class Collect {
         if (nextSlot >= counts.length) {
             long[] newCounts = new long[nextSlot * 2];
             System.arraycopy(counts, 0, newCounts, 0, counts.length);
-            List[] newAdjacencies = new List[nextSlot * 2];
-            System.arraycopy(adjacencies, 0, newAdjacencies, 0, adjacencies.length);
             counts_ = counts = newCounts;
+            List[] newAdjacencies = new List[nextSlot * 2];
+            for(int i=0;i<adjacencies.length;i++){
+                newAdjacencies[i] = adjacencies[i];
+            }
             adjacencies_ = adjacencies = newAdjacencies;
 //            throw new Error("Method slot count exceeded");
         }
+        adjacencies[nextSlot] = new List();
+        adjacencies_[nextSlot] = adjacencies[nextSlot];
         return nextSlot++;
     }
 
@@ -202,8 +214,13 @@ public class Collect {
      * @see #SLOTS
      */
     public static void enableCounts() {
-        counts_ = counts = new long[SLOTS];
-        adjacencies_ = adjacencies = new List[SLOTS];
+        int size = counts == null ? SLOTS : counts.length;
+        counts_ = counts = new long[size];
+        adjacencies_ = adjacencies = new List[size];
+        for (int i=0; i<adjacencies.length; i++) {
+            adjacencies[i] = new List();
+            adjacencies_[nextSlot] = adjacencies[nextSlot];
+        }
     }
 
     /**
@@ -257,6 +274,10 @@ public class Collect {
         // Disable hits. Can't use "enabled = false" as it will result in Agent malfunction
         counts = new long[counts.length]; // reset counts[] that are collecting hits - real hits will be available in counts_
         adjacencies = new List[adjacencies.length]; // reset counts[] that are collecting hits - real hits will be available in counts_
+        for (int i=0; i<adjacencies.length; i++) {
+            adjacencies[i] = new List();
+            adjacencies_[nextSlot] = adjacencies[nextSlot];
+        }
         lastHitted = -1;
 
         String s = PropertyFinder.findValue("saver", null);
