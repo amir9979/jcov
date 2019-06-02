@@ -452,8 +452,7 @@ public class DataField extends DataAnnotated implements Comparable<DataField>,
      * @param other
      */
     public void merge(DataField other) {
-        block.mergeScale(other.block);
-        block.setCount(getCount() + other.getCount());
+        block.merge(other.block);
     }
 
     /**

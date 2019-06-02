@@ -220,6 +220,7 @@ public class DataMethodWithBlocks extends DataMethod {
         }
     }
 
+
     @Override
     public void merge(DataMethod other) {
         DataMethodWithBlocks m = (DataMethodWithBlocks) other;

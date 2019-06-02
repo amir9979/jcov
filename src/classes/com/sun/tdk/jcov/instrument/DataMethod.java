@@ -328,6 +328,7 @@ public abstract class DataMethod extends DataAnnotated implements Comparable<Dat
      */
     public abstract long getCount();
 
+
     /**
      * Set count of hits. If DataMethod is attached - data is directly written
      * to Collect class<br/><br/>

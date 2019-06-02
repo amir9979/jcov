@@ -35,40 +35,85 @@ package com.sun.tdk.jcov.runtime;
  * @author Dmitry Fazunenko
  * @author Alexey Fedorchenko
  */
+class HitInformation {
+    public static final int INFORMATION_SIZE = 3;
+    public static final int HITS_SIZE = 40;
+    private long hitCount;
+    private long previousSlot;
+    private long parent;
 
-class List {
-    private long lst[];
+    HitInformation(long previousSlot, long parent) {
+        this.hitCount = 1;
+        this.previousSlot = previousSlot;
+        this.parent = parent;
+    }
+
+    public long[] toArray() {
+        return  new long[]{hitCount, previousSlot, parent};
+    }
+
+
+    public boolean equals(HitInformation other){
+        return this.previousSlot == other.previousSlot && this.parent == other.parent;
+    }
+
+    public void hit(){
+        this.hitCount++;
+    }
+
+    public long getHitCount() {
+        return hitCount;
+    }
+
+}
+
+class SlotInformation {
+    private HitInformation lst[];
     private int last;
-    public List() {
-        lst = new long[0];
+    private long hitCount;
+    private long slot;
+
+    SlotInformation(long slot) {
+        this.slot = slot;
+        lst = new HitInformation[HitInformation.HITS_SIZE];
         last = 0;
+        hitCount = 0;
     }
 
-    public long[] getArray() {
-        return lst;
+    public long[][] getArray() {
+        long hitsCounter = 0;
+        long[][] result = new long[last][HitInformation.INFORMATION_SIZE];
+        for (int i=0;i<last;i++){
+            result[i] = lst[i].toArray();
+            hitsCounter += lst[i].getHitCount();
+        }
+        assert hitsCounter == hitCount;
+        return result;
+    }
+    public long getHitCount(){
+        return hitCount;
     }
 
-    public void add(long elem) {
-        if (elem == -1){
-            return;
+    public void add(long previousSlot, long parent) {
+        this.hitCount++;
+        HitInformation info = new HitInformation(previousSlot, parent);
+        for (int i=0;i<last;i++) {
+            if (info.equals(lst[i])){
+                lst[i].hit();
+                return;
+            }
         }
         if(last < lst.length)
-            lst[last++] = elem;
+            lst[last++] = info;
         else {
-            long newList[] = new long[lst.length*2+1];
+            HitInformation newList[] = new HitInformation[lst.length*2+1];
             for(int i=0; i<newList.length; i++){
-                newList[i] = -1;
+                newList[i] = null;
             }
             System.arraycopy(lst, 0, newList, 0, lst.length);
             lst = newList;
-            lst[last++] = elem;
+            lst[last++] = info;
         }
-    }
-
-    public long get(int index) {
-        if(index < lst.length)
-            return lst[index];
-        return -1;
     }
 
 }
@@ -76,15 +121,16 @@ class List {
 public class Collect {
 
     // coverage data
-    public static final int MAX_SLOTS = 20000;
+    public static final int MAX_SLOTS = 40000;
     public static int SLOTS = MAX_SLOTS;
     private static final int MAX_SAVERS = 10;
     private static int nextSlot = 0;
     private static long counts[];
     private static long counts_[];
-    private static List adjacencies[];
-    private static List adjacencies_[];
+    private static SlotInformation slotInformation[];
+    private static SlotInformation slotInformation_[];
     private static long lastHitted = -1;
+    private static long[] stackSizes = new long[100];
     // -- coverage data
     // savers
     private static JCovSaver[] savers = new JCovSaver[MAX_SAVERS];
@@ -111,15 +157,15 @@ public class Collect {
             long[] newCounts = new long[nextSlot * 2];
             System.arraycopy(counts, 0, newCounts, 0, counts.length);
             counts_ = counts = newCounts;
-            List[] newAdjacencies = new List[nextSlot * 2];
-            for(int i=0;i<adjacencies.length;i++){
-                newAdjacencies[i] = adjacencies[i];
+            SlotInformation[] newslotInformation = new SlotInformation[nextSlot * 2];
+            for(int i=0;i<slotInformation.length;i++){
+                newslotInformation[i] = slotInformation[i];
             }
-            adjacencies_ = adjacencies = newAdjacencies;
+            slotInformation_ = slotInformation = newslotInformation;
 //            throw new Error("Method slot count exceeded");
         }
-        adjacencies[nextSlot] = new List();
-        adjacencies_[nextSlot] = adjacencies[nextSlot];
+        slotInformation[nextSlot] = new SlotInformation(nextSlot);
+        slotInformation_[nextSlot] = slotInformation[nextSlot];
         return nextSlot++;
     }
 
@@ -142,8 +188,18 @@ public class Collect {
      */
     public static void hit(int slot) {
         counts[slot]++;
-        adjacencies[slot].add(lastHitted);
+        int stack_size = java.lang.Thread.currentThread().getStackTrace().length;
+        stackSizes[stack_size] = slot;
+        long parent = -1;
+        for (int i=stack_size-1;i>=0; i--){
+            if(stackSizes[i] != -1) {
+                parent = stackSizes[i];
+                break;
+            }
+        }
+        slotInformation[slot].add(lastHitted, parent);
         lastHitted = slot;
+        clearStackSizes(stack_size);
     }
 
     /**
@@ -179,8 +235,12 @@ public class Collect {
         return counts_;
     }
 
-    public static List[] adjacencies() {
-        return adjacencies_;
+    public static long[][][] slotInformation() {
+        long[][][] result = new long[slotInformation_.length][][];
+        for (int slot=0;slot<slotInformation_.length;slot++){
+            result[slot] = slotInformationFor(slot);
+        }
+        return result;
     }
 
     /**
@@ -193,8 +253,8 @@ public class Collect {
         return counts_[slot];
     }
 
-    public static long[] adjacenciesFor(int slot) {
-        return adjacencies_[slot].getArray();
+    public static long[][] slotInformationFor(int slot) {
+        return slotInformation_[slot].getArray();
     }
 
     /**
@@ -207,6 +267,18 @@ public class Collect {
         counts[slot] = count;
     }
 
+
+    public static void clearStackSizes(int i){
+        i++;
+        for(;i< stackSizes.length;i++){
+            stackSizes[i] = -1;
+        }
+    }
+
+    public static void clearStackSizes(){
+        clearStackSizes(-1);
+    }
+
     /**
      * <p> Create the storage for coverage data. Allocates
      * <code>SLOTS</code> array of longs. </p>
@@ -216,11 +288,12 @@ public class Collect {
     public static void enableCounts() {
         int size = counts == null ? SLOTS : counts.length;
         counts_ = counts = new long[size];
-        adjacencies_ = adjacencies = new List[size];
-        for (int i=0; i<adjacencies.length; i++) {
-            adjacencies[i] = new List();
-            adjacencies_[nextSlot] = adjacencies[nextSlot];
+        slotInformation_ = slotInformation = new SlotInformation[size];
+        for (int slot=0; slot<slotInformation.length; slot++) {
+            slotInformation_[slot] = slotInformation[slot] = new SlotInformation(slot);
         }
+        clearStackSizes();
+        lastHitted = -1;
     }
 
     /**
@@ -273,12 +346,12 @@ public class Collect {
         }
         // Disable hits. Can't use "enabled = false" as it will result in Agent malfunction
         counts = new long[counts.length]; // reset counts[] that are collecting hits - real hits will be available in counts_
-        adjacencies = new List[adjacencies.length]; // reset counts[] that are collecting hits - real hits will be available in counts_
-        for (int i=0; i<adjacencies.length; i++) {
-            adjacencies[i] = new List();
-            adjacencies_[nextSlot] = adjacencies[nextSlot];
+        slotInformation = new SlotInformation[slotInformation.length]; // reset hitInformation[] that are collecting hits - real hits will be available in hitInformation
+        for (int slot=0; slot<slotInformation.length; slot++) {
+            slotInformation[slot] = new SlotInformation(slot);
         }
         lastHitted = -1;
+        clearStackSizes();
 
         String s = PropertyFinder.findValue("saver", null);
         if (s != null) {
@@ -316,7 +389,7 @@ public class Collect {
             }
         }
         counts_ = counts; // repoint counts_[] that are answering DataRoot about hits to newly created counts[]
-        adjacencies_ = adjacencies; // repoint counts_[] that are answering DataRoot about hits to newly created counts[]
+        slotInformation_ = slotInformation; // repoint counts_[] that are answering DataRoot about hits to newly created counts[]
         // Enable hits. Can't use "enabled = false" as it will result in Agent malfunction
     }
 

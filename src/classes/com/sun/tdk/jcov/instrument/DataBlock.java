@@ -48,8 +48,9 @@ import java.util.ArrayList;
 public abstract class DataBlock extends LocationRef {
 
     protected int slot;
+    protected int extraSlot;
     protected long count;
-    protected long[] adjacencies;
+    protected long[][] hitInformation;
     protected boolean attached;
     protected Scale scale;
 
@@ -60,7 +61,8 @@ public abstract class DataBlock extends LocationRef {
         super(rootId);
         this.slot = Collect.newSlot();
         attached = true;
-        adjacencies = new long[0];
+        hitInformation = new long[0][0];
+        extraSlot = -1;
     }
 
     DataBlock(int rootId, int slot, boolean attached, long count) {
@@ -68,7 +70,8 @@ public abstract class DataBlock extends LocationRef {
         this.slot = slot;
         this.attached = attached;
         this.count = count;
-        adjacencies = new long[0];
+        hitInformation = new long[0][0];
+        extraSlot = -1;
 
         if (attached) {
             setCollectCount(count);
@@ -127,32 +130,33 @@ public abstract class DataBlock extends LocationRef {
             return count;
         }
     }
-    public long[] getAdjacencies() {
+    public long[][] getHitInformation() {
         if (attached) {
-            return collectAdjacencies();
+            return collectSlotInformation();
         } else {
-            return adjacencies;
+            return hitInformation;
         }
     }
 
 
-    public String getAdjacenciesString() {
+    public String getHitInformationString() {
         StringBuilder result = new StringBuilder();
-        int i = 0;
+        result.append('[');
         int j = 0;
-        while(i < adjacencies.length) {
-            if (adjacencies[i] == -1){
-                i++;
-                continue;
-            }
+        while(j < hitInformation.length) {
             if (j > 0) {
-                result.append(';');
+                result.append(',');
             }
-            result.append(adjacencies[i]);
+            result.append(String.format("(%d,%d,%d)",
+                    hitInformation[j][0], hitInformation[j][1], hitInformation[j][2]));
             j++;
-            i++;
         }
+        result.append(']');
         return result.toString();
+    }
+
+    public String getExtraSlot() {
+        return "" + extraSlot;
     }
 
     /**
@@ -168,8 +172,12 @@ public abstract class DataBlock extends LocationRef {
         this.count = count;
     }
 
-    public void setAdjacencies(long[] adjacencies) {
-        this.adjacencies = adjacencies;
+    public void setHitInformation(long[][] hitInformation) {
+        this.hitInformation = hitInformation;
+    }
+
+    public void setExtraSlot(int slot){
+        extraSlot = slot;
     }
 
     /**
@@ -184,8 +192,8 @@ public abstract class DataBlock extends LocationRef {
         return Collect.countFor(slot);
     }
 
-    protected long[] collectAdjacencies() {
-        return Collect.adjacenciesFor(slot);
+    protected long[][] collectSlotInformation() {
+        return Collect.slotInformationFor(slot);
     }
 
     protected void setCollectCount(long count) {
@@ -211,9 +219,10 @@ public abstract class DataBlock extends LocationRef {
     void xmlAttrs(XmlContext ctx) {
         super.xmlAttrs(ctx);
         ctx.attr(XmlNames.ID, getId());
-        ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+        ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
 
         printScale(ctx);
+        assertCounter();
     }
 
     void printScale(XmlContext ctx) {
@@ -320,14 +329,28 @@ public abstract class DataBlock extends LocationRef {
         }
     }
 
+    void assertCounter(){
+//        long counter = 0;
+//        for(int j=0;j< getHitInformation().length;j++){
+//            counter += getHitInformation()[j][0];
+//        }
+//        if (counter != getCount()){
+//            throw new RuntimeException("counter != getCount()");
+//        }
+    }
+
     void writeObject(DataOutput out) throws IOException {
         super.writeObject(out);
         out.writeLong(getCount());
         out.writeInt(slot);
-        adjacencies = getAdjacencies();
-        out.writeInt(adjacencies.length);
-        for(int i=0;i<adjacencies.length;i++){
-            out.writeLong(adjacencies[i]);
+        out.writeInt(extraSlot);
+        hitInformation = getHitInformation();
+        out.writeInt(hitInformation.length);
+        for (int i = 0; i < hitInformation.length; i++) {
+            out.writeInt(hitInformation[i].length);
+            for (int j = 0; j < hitInformation[i].length; j++) {
+                out.writeLong(hitInformation[i][j]);
+            }
         }
 
         if (scale != null) {
@@ -336,22 +359,57 @@ public abstract class DataBlock extends LocationRef {
         } else {
             out.writeBoolean(false);
         }
+        assertCounter();
     }
 
     DataBlock(int rootId, DataInput in) throws IOException {
         super(rootId, in);
         count = in.readLong();
         slot = in.readInt();
-        int adjacenciesLength = in.readInt();
-        adjacencies = new long[adjacenciesLength];
-        for(int i=0;i<adjacencies.length;i++){
-            adjacencies[i] = in.readLong();
+        extraSlot = in.readInt();
+        int hitInformationLength = in.readInt();
+        hitInformation = new long[hitInformationLength][];
+        for (int i = 0; i < hitInformation.length; i++) {
+            int hitInformation_i_length = in.readInt();
+            hitInformation[i] = new long[hitInformation_i_length];
+            for (int j = 0; j < hitInformation[i].length; j++) {
+                hitInformation[i][j] = in.readLong();
+            }
         }
-
         if (in.readBoolean()) {
             scale = new Scale(in);
         } else {
             scale = null;
         }
+        assertCounter();
+    }
+
+    public void merge(DataBlock other){
+        assertCounter();
+        other.assertCounter();
+        mergeScale(other);
+        setCount(getCount() + other.getCount());
+        other.setCount(0);
+        setExtraSlot(other.slot);
+        if (other.getHitInformation().length == 0){
+            return;
+        }
+        if (getHitInformation().length == 0){
+            setHitInformation(other.getHitInformation());
+            other.setHitInformation(new long[0][0]);
+            return;
+        }
+        long[][] hitInformation = new long[getHitInformation().length + other.getHitInformation().length][];
+        int i=0;
+        for (; i< getHitInformation().length; i++){
+            hitInformation[i] = getHitInformation()[i];
+        }
+        for (int j = 0; j< other.getHitInformation().length; j++){
+            hitInformation[i+j] = other.getHitInformation()[j];
+        }
+        setHitInformation(hitInformation);
+        other.setHitInformation(new long[0][0]);
+        assertCounter();
+        other.assertCounter();
     }
 }

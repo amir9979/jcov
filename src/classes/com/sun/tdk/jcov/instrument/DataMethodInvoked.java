@@ -126,7 +126,7 @@ public class DataMethodInvoked extends DataMethod {
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
                 printScale(ctx);
             }
         };
@@ -217,12 +217,11 @@ public class DataMethodInvoked extends DataMethod {
         }
     }
 
+
     @Override
     public void merge(DataMethod other) {
         DataMethodInvoked m = (DataMethodInvoked) other;
-
-        entryBlock.mergeScale(m.entryBlock);
-        entryBlock.setCount(getCount() + m.getCount());
+        entryBlock.merge(m.entryBlock);
     }
 
     public Iterator<DataBlock> iterator() {
@@ -277,7 +276,7 @@ public class DataMethodInvoked extends DataMethod {
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
                 printScale(ctx);
             }
         };

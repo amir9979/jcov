@@ -97,7 +97,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
                 printScale(ctx);
             }
         };
@@ -138,7 +138,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
                 printScale(ctx);
             }
         };
@@ -173,7 +173,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
                 printScale(ctx);
             }
         };
@@ -213,16 +213,6 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
     public void setCount(long count) {
         entryBlock.setCount(count);
     }
-
-
-    public long[] getAdjacencies() {
-        return entryBlock.getAdjacencies();
-    }
-
-    public void setAdjacencies(long[] adjacencies) {
-        entryBlock.setAdjacencies(adjacencies);
-    }
-
 
 
     /**
@@ -292,18 +282,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
     @Override
     public void merge(DataMethod other) {
         DataMethodEntryOnly m = (DataMethodEntryOnly) other;
-
-        entryBlock.mergeScale(m.entryBlock);
-        entryBlock.setCount(getCount() + m.getCount());
-        long[] adjacencies = new long[getAdjacencies().length + m.getAdjacencies().length];
-        int i=0;
-        for (;i< getAdjacencies().length;i++){
-            adjacencies[i] = getAdjacencies()[i];
-        }
-        for (int j=0;j< m.getAdjacencies().length;j++){
-            adjacencies[i+j] = m.getAdjacencies()[j];
-        }
-        entryBlock.setAdjacencies(adjacencies);
+        entryBlock.merge(m.entryBlock);
     }
 
     @Override
@@ -339,7 +318,7 @@ public class DataMethodEntryOnly extends DataMethod implements Iterable<DataBloc
             @Override
             void xmlAttrs(XmlContext ctx) {
                 ctx.attr(XmlNames.ID, getId());
-                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.CALLERS, getAdjacenciesString());
+                ctx.attr(XmlNames.COUNT, getCount());ctx.attr(XmlNames.HIT_INFORMATION, getHitInformationString());ctx.attr(XmlNames.EXTRA_SLOTS, getExtraSlot());
                 printScale(ctx);
             }
         };

@@ -162,9 +162,7 @@ public class SimpleBasicBlock extends BasicBlock {
     @Override
     public void merge(BasicBlock other) {
         SimpleBasicBlock so = (SimpleBasicBlock) other;
-
-        block.mergeScale(so.block);
-        block.setCount(getCount() + so.getCount());
+        block.merge(so.block);
     }
 
     @Override

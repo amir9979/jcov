@@ -189,14 +189,12 @@ public class BasicBlock extends LocationConcrete {
                             && (b.getClass() == bo.getClass())
                             && b.isFallenInto() == bo.isFallenInto()) {
 
-                        b.mergeScale(bo);
-                        b.setCount(b.getCount() + bo.getCount());
+                        b.merge(bo);
                         break;
                     }
                 } else {
                     if (b.getId() == bo.getId()) {
-                        b.mergeScale(bo);
-                        b.setCount(b.getCount() + bo.getCount());
+                        b.merge(bo);
                         break;
                     }
                 }
