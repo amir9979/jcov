@@ -54,7 +54,7 @@ class HitInformation {
 
 
     public boolean equals(HitInformation other){
-        return this.previousSlot == other.previousSlot && this.parent == other.parent;
+        return other != null && this.previousSlot == other.previousSlot && this.parent == other.parent;
     }
 
     public void hit(){
