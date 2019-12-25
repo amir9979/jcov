@@ -121,7 +121,7 @@ class SlotInformation {
 public class Collect {
 
     // coverage data
-    public static final int MAX_SLOTS = 40000;
+    public static final int MAX_SLOTS = 60000;
     public static int SLOTS = MAX_SLOTS;
     private static final int MAX_SAVERS = 10;
     private static int nextSlot = 0;
