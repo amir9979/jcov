@@ -29,6 +29,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
+import java.util.Date;
 
 /**
  *
@@ -37,6 +38,8 @@ import java.util.logging.LogRecord;
 public class LoggingFormatter extends Formatter {
 
     public static boolean printStackTrace = Boolean.parseBoolean(PropertyFinder.findValue("stacktrace", "false"));
+    String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+    String format = "[%1$tF %1$tT] %2$-8s: %3$s\n";
 
     @Override
     public String format(LogRecord record) {
@@ -65,7 +68,7 @@ public class LoggingFormatter extends Formatter {
 
             return ret.toString();
         } else {
-            return String.format("%-8s: %s\n", record.getLevel().getLocalizedName(), formatMessage(record));
+            return String.format("[%1$tF %1$tT] %2$-8s: %3$s\n", new Date(record.getMillis()), record.getLevel().getLocalizedName(), formatMessage(record));
         }
     }
 }
