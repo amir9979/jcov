@@ -147,8 +147,8 @@ public abstract class DataBlock extends LocationRef {
             if (j > 0) {
                 result.append(',');
             }
-            result.append(String.format("(%d,%d,%d)",
-                    hitInformation[j][0], hitInformation[j][1], hitInformation[j][2]));
+            result.append(String.format("(%d,%d,%d,%d)",
+                    hitInformation[j][0], hitInformation[j][1], hitInformation[j][2], hitInformation[j][3]));
             j++;
         }
         result.append(']');

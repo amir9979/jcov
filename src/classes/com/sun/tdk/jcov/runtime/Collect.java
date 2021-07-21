@@ -36,25 +36,27 @@ package com.sun.tdk.jcov.runtime;
  * @author Alexey Fedorchenko
  */
 class HitInformation {
-    public static final int INFORMATION_SIZE = 3;
+    public static final int INFORMATION_SIZE = 4;
     public static final int HITS_SIZE = 40;
     private long hitCount;
     private long previousSlot;
     private long parent;
+    private long test_slot;
 
-    HitInformation(long previousSlot, long parent) {
+    HitInformation(long previousSlot, long parent, long test_slot) {
         this.hitCount = 1;
         this.previousSlot = previousSlot;
         this.parent = parent;
+        this.test_slot = test_slot;
     }
 
     public long[] toArray() {
-        return  new long[]{hitCount, previousSlot, parent};
+        return  new long[]{hitCount, previousSlot, parent, test_slot};
     }
 
 
     public boolean equals(HitInformation other){
-        return other != null && this.previousSlot == other.previousSlot && this.parent == other.parent;
+        return other != null && this.previousSlot == other.previousSlot && this.parent == other.parent && this.test_slot == other.test_slot;
     }
 
     public void hit(){
@@ -94,16 +96,16 @@ class SlotInformation {
         return hitCount;
     }
 
-    public void add(long previousSlot, long parent) {
+    public void add(long previousSlot, long parent, long test_slot) {
         this.hitCount++;
-        HitInformation info = new HitInformation(previousSlot, parent);
+        HitInformation info = new HitInformation(previousSlot, parent, test_slot);
         for (int i=0;i<last;i++) {
             if (info.equals(lst[i])){
                 lst[i].hit();
                 return;
             }
         }
-        if(last < lst.length)
+        if (last < lst.length)
             lst[last++] = info;
         else {
             HitInformation newList[] = new HitInformation[lst.length*2+1];
@@ -130,7 +132,10 @@ public class Collect {
     private static SlotInformation slotInformation[];
     private static SlotInformation slotInformation_[];
     private static long lastHitted = -1;
+    private static long hittedTestInd = -1;
+    private static long hittedTestSlot = -1;
     private static long[] stackSizes = new long[100];
+    private static String[] stackNames = new String[100];
     // -- coverage data
     // savers
     private static JCovSaver[] savers = new JCovSaver[MAX_SAVERS];
@@ -188,16 +193,27 @@ public class Collect {
      */
     public static void hit(int slot) {
         counts[slot]++;
-        int stack_size = java.lang.Thread.currentThread().getStackTrace().length;
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        int stack_size = stackTrace.length;
         stackSizes[stack_size] = slot;
+        stackNames[stack_size] = stackTrace[stack_size - 2].toString();
         long parent = -1;
-        for (int i=stack_size-1;i>=0; i--){
-            if(stackSizes[i] != -1) {
+        byte[] test_name = null;
+        int test_ind = -1;
+        for (int i=stack_size-1;i>=0; i--) {
+            if (stackSizes[i] != -1) {
                 parent = stackSizes[i];
                 break;
             }
         }
-        slotInformation[slot].add(lastHitted, parent);
+        // check if this is a new test
+        String class_name  = stackTrace[3].getClassName();
+        String method_name  = stackTrace[3].getMethodName();
+        if (class_name.endsWith("Test") && method_name.startsWith("test")) {
+                    hittedTestSlot = slot;
+        }
+
+        slotInformation[slot].add(lastHitted, parent, hittedTestSlot);
         lastHitted = slot;
         clearStackSizes(stack_size);
     }
