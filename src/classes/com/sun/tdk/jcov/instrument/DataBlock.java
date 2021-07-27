@@ -49,6 +49,7 @@ public abstract class DataBlock extends LocationRef {
 
     protected int slot;
     protected int extraSlot;
+    protected int merged_to;
     protected long count;
     protected long[][] hitInformation;
     protected boolean attached;
@@ -63,6 +64,7 @@ public abstract class DataBlock extends LocationRef {
         attached = true;
         hitInformation = new long[0][0];
         extraSlot = -1;
+        merged_to = -1;
     }
 
     DataBlock(int rootId, int slot, boolean attached, long count) {
@@ -72,6 +74,7 @@ public abstract class DataBlock extends LocationRef {
         this.count = count;
         hitInformation = new long[0][0];
         extraSlot = -1;
+        merged_to = -1;
 
         if (attached) {
             setCollectCount(count);
@@ -147,8 +150,8 @@ public abstract class DataBlock extends LocationRef {
             if (j > 0) {
                 result.append(',');
             }
-            result.append(String.format("(%d,%d,%d,%d)",
-                    hitInformation[j][0], hitInformation[j][1], hitInformation[j][2], hitInformation[j][3]));
+            result.append(String.format("(%d,%d,%d,%d,%d,%d)",
+                    hitInformation[j][0], hitInformation[j][1], hitInformation[j][2], hitInformation[j][3], hitInformation[j][4], hitInformation[j][5]));
             j++;
         }
         result.append(']');
@@ -391,6 +394,9 @@ public abstract class DataBlock extends LocationRef {
         setCount(getCount() + other.getCount());
         other.setCount(0);
         setExtraSlot(other.slot);
+//        other.setExtraSlot(-1);
+//        other.setId(-1);
+        other.merged_to = slot;
         if (other.getHitInformation().length == 0){
             return;
         }

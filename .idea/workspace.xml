@@ -45,11 +45,18 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SearchEverywhereHistoryKey" value="hitin&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.HitInformation&#10;premain&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Agent#premain&#10;collec&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/Collect.java&#10;DataMethodWithBlocks&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/instrument/DataMethodWithBlocks.java&#10;DataBlock&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/instrument/DataBlock.java&#10;datameth&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/instrument/DataMethodWithBlocks.java&#10;סצךמשצ&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/instrument/XmlNames.java&#10;collect&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/Collect.java&#10;xml&#9;PSI&#9;JAVA://com.sun.tdk.jcov.instrument.XmlNames&#10;saveres&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.JCovSaver#saveResults&#10;startNewTestCommand&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#startNewTestCommand&#10;sendSaveCommand&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#sendSaveCommand&#10;execu&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;ex&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;logging.properties&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/logging.properties&#10;setfilename&#9;PSI&#9;JAVA://com.sun.tdk.jcov.Server#setFileName&#10;CollectDetect&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/runtime/CollectDetect.java&#10;execution&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;sendcode&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#sendCode&#10;Grabber.java&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/Grabber.java&#10;tmpl&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/TmplGen.java&#10;saveAgentDataCommand&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager#saveAgentDataCommand&#10;grabber&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/jcov/ant/Grabber.java&#10;listen&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;processclass&#9;PSI&#9;JAVA://com.sun.tdk.jcov.insert.AbstractUniversalInstrumenter#processClassDir&#10;xmlna&#9;PSI&#9;JAVA://com.sun.tdk.jcov.instrument.XmlNames&#10;processdi&#9;PSI&#9;JAVA://com.sun.tdk.jcov.insert.AbstractUniversalInstrumenter#processClassDir&#10;tmplgen&#9;PSI&#9;JAVA://com.sun.tdk.jcov.TmplGen&#10;JcovPortNumber&#9;PSI&#9;JAVA://com.sun.tdk.jcov.constants.MiscConstants#JcovPortNumber&#10;counts&#9;PSI&#9;JAVA://com.sun.tdk.jcov.runtime.Collect#counts&#10;JUnitExecutionListener&#9;FILE&#9;file://C:/Users/User/Documents/GitHub/jcov/src/classes/com/sun/tdk/listener/JUnitExecutionListener.java&#10;grabberManager&#9;PSI&#9;JAVA://com.sun.tdk.jcov.GrabberManager" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1559502624524" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -129,6 +136,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1540278803733</updated>
+      <workItem from="1627414826606" duration="5437000" />
     </task>
     <servers />
   </component>
@@ -141,6 +149,9 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -151,6 +162,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2334" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1626880498249">
@@ -161,42 +173,50 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="439" y="200" width="998" height="697" key="#xdebugger.evaluate/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626883377682" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1626882884368">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.0.bottom" timestamp="1626905757371">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1626905757371" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884368" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1626882884368">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.0.center" timestamp="1626905757371">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1626905757371" />
     <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884368" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1626882884368">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.0.left" timestamp="1626905757369">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1626905757369" />
     <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884368" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1626882884368">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.0.right" timestamp="1626905757371">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1626905757371" />
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884368" />
-    <state width="1877" height="282" key="GridCell.Tab.1.bottom" timestamp="1626882884882">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.1.bottom" timestamp="1626905757372">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1626905757372" />
     <state width="1877" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884882" />
-    <state width="1877" height="282" key="GridCell.Tab.1.center" timestamp="1626882884882">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.1.center" timestamp="1626905757371">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1626905757371" />
     <state width="1877" height="282" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884882" />
-    <state width="1877" height="282" key="GridCell.Tab.1.left" timestamp="1626882884882">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.1.left" timestamp="1626905757371">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1626905757371" />
     <state width="1877" height="282" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884882" />
-    <state width="1877" height="282" key="GridCell.Tab.1.right" timestamp="1626882884882">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1323" height="282" key="GridCell.Tab.1.right" timestamp="1626905757372">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="282" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1626905757371" />
     <state width="1877" height="282" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626882884882" />
-    <state x="2587" y="253" width="585" height="534" key="find.popup" timestamp="1626879168574">
+    <state x="2587" y="253" width="585" height="534" key="find.popup" timestamp="1627420152314">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2587" y="253" width="585" height="534" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1626879168574" />
+    <state x="2587" y="253" width="585" height="534" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1627420152314" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -398,7 +418,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/JCOV_BUILD/temp/listener_src/com/sun/tdk/jcov/instrument/DataBlock.java</url>
-          <line>201</line>
+          <line>204</line>
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -412,18 +432,6 @@
           <option name="timeStamp" value="210" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <condition expression="getHitInformation().length == 0 " language="JAVA" />
-          <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/DataBlock.java</url>
-          <line>401</line>
-          <option name="timeStamp" value="211" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <condition expression="count != hitInformationLength" language="JAVA" />
-          <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/instrument/DataBlock.java</url>
-          <line>370</line>
-          <option name="timeStamp" value="212" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/JCOV_BUILD/temp/listener_src/com/sun/tdk/jcov/Grabber.java</url>
           <line>1616</line>
           <option name="timeStamp" value="214" />
@@ -431,18 +439,18 @@
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="slot &gt; counts_.length " language="JAVA" />
           <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/Collect.java</url>
-          <line>242</line>
+          <line>250</line>
           <option name="timeStamp" value="224" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/Collect.java</url>
-          <line>196</line>
+          <line>201</line>
           <option name="timeStamp" value="234" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="i==3" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/classes/com/sun/tdk/jcov/runtime/Collect.java</url>
-          <line>203</line>
+          <line>208</line>
           <option name="timeStamp" value="235" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-wildcard-method">

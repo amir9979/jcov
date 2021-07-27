@@ -36,18 +36,22 @@ package com.sun.tdk.jcov.runtime;
  * @author Alexey Fedorchenko
  */
 class HitInformation {
-    public static final int INFORMATION_SIZE = 4;
+    public static final int INFORMATION_SIZE = 6;
     public static final int HITS_SIZE = 40;
     private long hitCount;
     private long previousSlot;
     private long parent;
     private long test_slot;
+    private long hittedTestParentSlot;
+    private long hittedTestLastSlot;
 
-    HitInformation(long previousSlot, long parent, long test_slot) {
+    HitInformation(long previousSlot, long parent, long test_slot, long hittedTestParentSlot, long hittedTestLastSlot) {
         this.hitCount = 1;
         this.previousSlot = previousSlot;
         this.parent = parent;
         this.test_slot = test_slot;
+        this.hittedTestParentSlot = hittedTestParentSlot;
+        this.hittedTestLastSlot = hittedTestLastSlot;
     }
 
     public long[] toArray() {
@@ -56,7 +60,7 @@ class HitInformation {
 
 
     public boolean equals(HitInformation other){
-        return other != null && this.previousSlot == other.previousSlot && this.parent == other.parent && this.test_slot == other.test_slot;
+        return other != null && this.previousSlot == other.previousSlot && this.parent == other.parent && this.test_slot == other.test_slot && this.hittedTestParentSlot == other.hittedTestParentSlot && this.hittedTestLastSlot == other.hittedTestLastSlot;
     }
 
     public void hit(){
@@ -96,9 +100,9 @@ class SlotInformation {
         return hitCount;
     }
 
-    public void add(long previousSlot, long parent, long test_slot) {
+    public void add(long previousSlot, long parent, long test_slot, long hittedTestParentSlot, long hittedTestLastSlot) {
         this.hitCount++;
-        HitInformation info = new HitInformation(previousSlot, parent, test_slot);
+        HitInformation info = new HitInformation(previousSlot, parent, test_slot, hittedTestParentSlot, hittedTestLastSlot);
         for (int i=0;i<last;i++) {
             if (info.equals(lst[i])){
                 lst[i].hit();
@@ -132,8 +136,9 @@ public class Collect {
     private static SlotInformation slotInformation[];
     private static SlotInformation slotInformation_[];
     private static long lastHitted = -1;
-    private static long hittedTestInd = -1;
     private static long hittedTestSlot = -1;
+    private static long hittedTestParentSlot = -1;
+    private static long hittedTestLastSlot = -1;
     private static long[] stackSizes = new long[100];
     private static String[] stackNames = new String[100];
     // -- coverage data
@@ -210,10 +215,12 @@ public class Collect {
         String class_name  = stackTrace[3].getClassName();
         String method_name  = stackTrace[3].getMethodName();
         if (class_name.endsWith("Test") && method_name.startsWith("test")) {
-                    hittedTestSlot = slot;
+            hittedTestSlot = slot;
+            hittedTestParentSlot = parent;
+            hittedTestLastSlot = lastHitted;
         }
 
-        slotInformation[slot].add(lastHitted, parent, hittedTestSlot);
+        slotInformation[slot].add(lastHitted, parent, hittedTestSlot, hittedTestParentSlot, hittedTestLastSlot);
         lastHitted = slot;
         clearStackSizes(stack_size);
     }
