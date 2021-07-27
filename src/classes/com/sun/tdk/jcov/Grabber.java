@@ -855,7 +855,7 @@ class Server extends Thread {
             dataSaved = true;
         } catch (Exception ex) {
             Grabber.logger.log(Level.SEVERE, "Error while saving data", ex);
-//            ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
     /**
