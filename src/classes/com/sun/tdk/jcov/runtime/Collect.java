@@ -55,7 +55,7 @@ class HitInformation {
     }
 
     public long[] toArray() {
-        return  new long[]{hitCount, previousSlot, parent, test_slot};
+        return  new long[]{hitCount, previousSlot, parent, test_slot, hittedTestParentSlot, hittedTestLastSlot};
     }
 
 
