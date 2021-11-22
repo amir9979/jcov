@@ -212,9 +212,11 @@ public class Collect {
             }
         }
         // check if this is a new test
-        String class_name  = stackTrace[3].getClassName();
-        String method_name  = stackTrace[3].getMethodName();
-        if (class_name.endsWith("Test") && method_name.startsWith("test")) {
+//        String class_name  = stackTrace[3].getClassName();
+//        String method_name  = stackTrace[3].getMethodName();
+        // try to check if it called from:
+        // sun.reflect.NativeMethodAccessorImpl.invoke0 or sun.reflect.NativeMethodAccessorImpl.invoke or java.lang.reflect.Method.invoke
+        if (stackTrace[4].getMethodName().contains("invoke")) {
             hittedTestSlot = slot;
             hittedTestParentSlot = parent;
             hittedTestLastSlot = lastHitted;
